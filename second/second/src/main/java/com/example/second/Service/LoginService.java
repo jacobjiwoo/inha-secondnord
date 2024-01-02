@@ -12,6 +12,7 @@ public class LoginService {
     private final MemberRepository memberRepository;
     @Transactional
     public Member login(String loginId, String password){
+
         return memberRepository.findByLoginId(loginId)
                 .filter(m -> m.getPassword().equals(password)).orElse(null);
     }
