@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,9 +25,16 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
     private final LoginService loginService;
+    private final PasswordEncoder passwordEncoder;
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalStateException.class)
     public ErrorResult illegalExHandle(IllegalStateException e) {
+        log.error("[exceptionHandle] ex", e);
+        return new ErrorResult("BAD", e.getMessage());
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NullPointerException.class)
+    public ErrorResult NullExHandle(NullPointerException e) {
         log.error("[exceptionHandle] ex", e);
         return new ErrorResult("BAD", e.getMessage());
     }
@@ -39,7 +46,8 @@ public class MemberController {
         member.setEmail(request.getEmail());
         member.setGender(request.getGender());
         member.setBirth(request.getBirth());
-        member.setPassword(request.getPassword());
+        String password = passwordEncoder.encode(request.getPassword());
+        member.setPassword(password);
 
         Long member_id = memberService.join(member);
 
@@ -52,7 +60,7 @@ public class MemberController {
         Member loginMember = loginService.login(request.getId(),request.getPassword());
         log.info("login? {}",loginMember);
         if(loginMember == null){
-            //처리필요
+            throw new NullPointerException("아이디혹은 비밀번호가 올바르지 않습니다.");
         }
         //로그인 성공 처리
         //세션이 있다면 있는세션 반환 아니면 생성
@@ -88,23 +96,26 @@ public class MemberController {
         private String message;
     }
     @Data
-    static class CreateMemberRequest{
-        @NotEmpty
+    static class CreateMemberRequest {
+        @Pattern(regexp = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "이메일 형식이 올바르지 않습니다.")
         private String email;
-        @Pattern(regexp = "^[a-zA-Z0-9]{6,12}$", message = "아이디는 6~12자의 영문 대,소문자와 숫자의 조합이어야 합니다.")
+
+        @Pattern(regexp = "^[A-Za-z0-9]{6,12}$", message = "아이디는 6~12자의 영문 대, 소문자와 숫자의 조합이어야 합니다.")
         private String id;
+
         @NotEmpty
         private String gender;
+
         @NotEmpty
         private String birth;
+
         @Pattern(
-                regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&^])[A-Za-z\\d@$!%*?&^]{8,16}$",
+                regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,20}$",
                 message = "비밀번호는 8~16자의 영문 대소문자, 숫자, 특수기호의 조합이어야 합니다."
         )
         private String password;
-
-
     }
+
     @Data
     static class CreateMemberResponse{
         private Long id;
