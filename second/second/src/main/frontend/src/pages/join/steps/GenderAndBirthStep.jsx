@@ -1,4 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
@@ -20,8 +21,25 @@ function GenderAndBirthStep({ onNext }) {
 
   const birthRegister = register("birth", {
     required: { value: true, message: "생년월일을 선택해주세요." },
+    minLength: { value: 8, message: "8자리 생년월일을 입력해주세요." },
+    maxLength: { value: 8, message: "8자리 생년월일을 입력해주세요." },
   });
 
+  // const handleBirthChange = (event) => {
+  //   console.log(event.target.value);
+  //   const input = event.target.value.replace(/\D/g, "").substring(0, 8);
+  //   const year = event.target.value.substring(0, 4);
+  //   const month = event.target.value.substring(4, 6);
+  //   const day = event.target.value.substring(6, 8);
+
+  //   if (input.length > 6) {
+  //     event.target.value = `${year} ${month} ${day}`;
+  //   } else if (input.length > 4) {
+  //     event.target.value = `${year} ${month}`;
+  //   } else if (input.length > 0) {
+  //     event.target.value = `${year}`;
+  //   }
+  // };
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(handleGenderAndBirthSubmit)}>
@@ -41,14 +59,13 @@ function GenderAndBirthStep({ onNext }) {
         <div>생년월일</div>
         <input
           name="birth"
-          type="number"
+          type="text"
           maxLength={8}
+          autoFocus
           placeholder="YYYY.MM.DD"
           {...birthRegister}
+          // onChange={handleBirthChange}
         />
-        {/* <input name="year" type="number" maxLength={4} placeholder="YYYY" />
-        <input name="month" type="number" maxLength={2} placeholder="MM" />
-        <input name="day" type="number" maxLength={2} placeholder="DD" /> */}
         <ErrorMessage
           name="birth"
           errors={errors}

@@ -14,5 +14,5 @@ export const useFunnel = (defaultStep) => {
     return targetStep;
   };
 
-  return [Funnel, Step, setStep];
+  return { Funnel, Step, setStep };
 };
