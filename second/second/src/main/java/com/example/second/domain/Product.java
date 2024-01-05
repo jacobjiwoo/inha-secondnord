@@ -16,10 +16,12 @@ public class Product {
 
     private String name;
     private String description;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="finger_princess_id")
     private FingerPrincess fingerPrincess;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="finger_guard_id")
     private FingerGuard fingerGuard;
 }
