@@ -1,20 +1,28 @@
-import { useNavigate } from "react-router-dom";
+import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import { common_questions } from "./questions";
 import styled from "styled-components";
 
 function Onboarding() {
   const navigate = useNavigate();
+  const onboardingMatch = useMatch("/onboarding");
+
   return (
     <OnboardingLayout>
-      <h2>어떤 서비스를 원하시나요?</h2>
-      <div className="buttons">
-        <button type="button" onClick={() => navigate("princess")}>
-          핑거 프린세스
-        </button>
-        <button type="button" onClick={() => navigate("guard")}>
-          핑거 가드
-        </button>
-      </div>
+      {onboardingMatch ? (
+        <>
+          <h2>어떤 서비스를 원하시나요?</h2>
+          <div className="buttons">
+            <button type="button" onClick={() => navigate("princess")}>
+              핑거 프린세스
+            </button>
+            <button type="button" onClick={() => navigate("guard")}>
+              핑거 가드
+            </button>
+          </div>{" "}
+        </>
+      ) : (
+        <Outlet />
+      )}
     </OnboardingLayout>
   );
 }

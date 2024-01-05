@@ -59,8 +59,8 @@ function GenderAndBirthStep({ onNext }) {
         <div>생년월일</div>
         <input
           name="birth"
-          type="text"
-          maxLength={8}
+          type="number"
+          pattern="\d*"
           autoFocus
           placeholder="YYYY.MM.DD"
           {...birthRegister}
@@ -80,6 +80,9 @@ function GenderAndBirthStep({ onNext }) {
 export default GenderAndBirthStep;
 
 const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid red;
   width: 100vw;
 `;

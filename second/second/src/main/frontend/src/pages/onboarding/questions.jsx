@@ -35,7 +35,7 @@ export const princess_questions = [
   },
   {
     type: "princess",
-    question: "본인이 자주 사용하거나 선호나느 브랜드가 있으신가요?",
+    question: "본인이 자주 사용하거나 선호하는 브랜드가 있으신가요?",
     choice: [
       {
         name: "삼성",
@@ -81,7 +81,7 @@ export const guard_questions = [
         description: "",
       },
       {
-        name: "아니요",
+        name: "아니오",
         description: "",
       },
     ],

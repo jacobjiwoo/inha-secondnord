@@ -29,18 +29,23 @@ function PasswordStep({ onNext }) {
   return (
     <Wrapper>
       <form onSubmit={handleSubmit(handlePasswordSubmit)}>
-        <label htmlFor="password">비밀번호</label>
-        <input
-          id="password"
-          type={showPassword ? "text" : "password"}
-          maxLength={16}
-          autoFocus
-          {...passwordRegister}
-        />
+        <InputWrapper htmlFor="password">
+          <input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            maxLength={16}
+            placeholder="비밀번호"
+            autoFocus
+            {...passwordRegister}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            비밀번호 표시
+          </button>
+        </InputWrapper>
         <NextButton type="submit" />
-        <button type="button" onClick={() => setShowPassword((prev) => !prev)}>
-          비밀번호 표시
-        </button>
         <ErrorMessage
           name="password"
           errors={errors}
@@ -56,6 +61,16 @@ export default PasswordStep;
 const Wrapper = styled.div`
   border: 1px solid red;
   width: 100vw;
+  & form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const InputWrapper = styled.label`
+  border: 1px solid blue;
 `;
 
 const NextButton = styled.input`

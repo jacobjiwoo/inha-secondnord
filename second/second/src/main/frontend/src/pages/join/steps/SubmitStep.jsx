@@ -12,12 +12,12 @@ const handleJoinSubmit = async (data) => {
 function SubmitStep() {
   const navigate = useNavigate();
   const { getValues } = useFormContext();
-  // const { isLoading, data, isError, error } = useQuery({
-  //   queryKey: ["join"],
-  //   queryFn: async () => {
-  //     return await handleJoinSubmit(getValues());
-  //   },
-  // });
+  const { isLoading, data, isError, error } = useQuery({
+    queryKey: ["join"],
+    queryFn: async () => {
+      return await handleJoinSubmit(getValues());
+    },
+  });
   return (
     <>
       <div>

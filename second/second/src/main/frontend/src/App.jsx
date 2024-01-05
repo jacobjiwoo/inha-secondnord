@@ -3,12 +3,12 @@ import { Mobile, PC, Tablet } from "./configResponsive";
 import { Route, Routes } from "react-router-dom";
 import Join from "./pages/join/Join";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import Onboarding from "./pages/onboarding/OnBoarding";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import OnboardingPrincess from "./pages/onboarding/OnboardingPrincess";
-import OnboardingGuard from "./pages/onboarding/OnboardingGuard";
+import OnboardingPrincess from "./pages/onboarding/princess/OnboardingPrincess";
+import OnboardingGuard from "./pages/onboarding/guard/OnboardingGuard";
 import TabBar from "./components/TabBar";
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
           </Route>
         </Routes>
       </Mobile>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
     </>
   );
 }

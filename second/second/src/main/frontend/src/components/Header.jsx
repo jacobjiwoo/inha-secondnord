@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function Header() {
   return (
     <HeaderLayout>
       <h1>Header</h1>
+      <Link to="/login">로그인</Link>
     </HeaderLayout>
   );
 }

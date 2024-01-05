@@ -26,11 +26,19 @@ function IdStep({ onNext }) {
   return (
     <>
       <form onSubmit={handleSubmit(handleIdSubmit)}>
-        <InputWrapper>
-          <label htmlFor="id">아이디</label>
-          <input id="id" type="text" maxLength={12} autoFocus {...idRegister} />
+        <InputWrapper htmlFor="id">
+          <input
+            id="id"
+            type="text"
+            maxLength={12}
+            placeholder="아이디"
+            autoFocus
+            {...idRegister}
+          />
         </InputWrapper>
-        <NextButton type="submit" disabled={isValid ? false : true} />
+        <FunnelButton type="submit" disabled={isValid ? false : true}>
+          다음
+        </FunnelButton>
         <ErrorMessage
           name="id"
           errors={errors}
@@ -43,18 +51,11 @@ function IdStep({ onNext }) {
 
 export default IdStep;
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.label`
   border: 1px solid blue;
-  width: 100%;
-  & label {
-    display: block;
-  }
-  & input {
-    width: 100%;
-  }
 `;
 
-const NextButton = styled.input`
+const FunnelButton = styled.button`
   width: 80%;
   height: 50px;
 `;

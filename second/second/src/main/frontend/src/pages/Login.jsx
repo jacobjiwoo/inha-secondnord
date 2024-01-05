@@ -2,20 +2,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import styled from "styled-components";
+import { useState } from "react";
+import { ErrorMessage } from "@hookform/error-message";
 
 function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginErrors, setLoginErrors] = useState("");
   const navigate = useNavigate();
-  const { register, handleSubmit, getValues } = useForm();
-
-  const handleLoginSubmit = async () => {
-    try {
-      const response = await axios.post("/api/login", getValues());
-      console.log(response);
-      navigate("/home");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
 
   const idRegister = register("id", {
     required: { value: true, message: "아이디를 입력해주세요" },
@@ -34,17 +33,51 @@ function Login() {
     },
   });
 
+  const handleLoginSubmit = async () => {
+    try {
+      const response = await axios.post("/api/login", getValues());
+      console.log(response);
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+      setLoginErrors(error.response.data.message);
+    }
+  };
+
   return (
     <LoginLayout>
       <LoginBox>
         <form onSubmit={handleSubmit(handleLoginSubmit)}>
-          <Input id="id" type="text" placeholder="아이디" {...idRegister} />
+          <Input
+            id="id"
+            type="text"
+            placeholder="아이디"
+            {...idRegister}
+            autoFocus
+          />
+          <ErrorMessage
+            name="id"
+            errors={errors}
+            render={({ message }) => <span>{message}</span>}
+          />
           <Input
             id="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="비밀번호"
             {...passwordRegister}
           />
+          <ErrorMessage
+            name="password"
+            errors={errors}
+            render={({ message }) => <span>{message}</span>}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            비밀번호 표시
+          </button>
+          <span style={{ color: "red" }}>{loginErrors}</span>
           <Button className="submit" type="submit">
             로그인
           </Button>
@@ -64,7 +97,6 @@ const FlexCenterBox = styled.div`
 `;
 
 const LoginLayout = styled.div`
-  background-color: #f3ddc3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,7 +111,7 @@ const LoginBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 80%;
-  height: 30%;
+  height: 40%;
   border-color: #9852f9;
   border-radius: 10px;
 

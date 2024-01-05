@@ -52,7 +52,6 @@ function Join() {
 export default Join;
 
 const JoinLayout = styled.div`
-  background-color: #f3ddc3;
   display: flex;
   justify-content: center;
   align-items: center;

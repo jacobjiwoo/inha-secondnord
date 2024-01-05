@@ -5,7 +5,7 @@ function Home() {
   return (
     <>
       <Header />
-      <HomeLayout>홈화면</HomeLayout>
+      <HomeLayout></HomeLayout>
     </>
   );
 }
@@ -13,6 +13,5 @@ function Home() {
 export default Home;
 
 const HomeLayout = styled.div`
-  border: 3px solid blue;
   height: 100vh;
 `;
