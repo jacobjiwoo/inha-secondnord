@@ -10,11 +10,11 @@ public class Member {
     @Id @GeneratedValue
     @Column(name="member_id")
     private Long member_id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="finger_guard_id")
     FingerGuard fingerGuard;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="finger_princess_id")
     FingerPrincess fingerPrincess;
 
@@ -27,5 +27,7 @@ public class Member {
     private String birth;
 
     private String password;
+
+
 
 }

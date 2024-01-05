@@ -13,7 +13,7 @@ public class Brand {
     @Column(name="Brand_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "finger_princess_id")
     FingerPrincess fingerPrincess;
 

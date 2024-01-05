@@ -16,7 +16,12 @@ public class MemberRepository {
     private EntityManager em;
 
     public void save(Member member){
-        em.persist(member);
+        if(member.getMember_id()==null){
+            em.persist(member);
+        }else{
+            em.merge(member);
+        }
+
     }
     public Member findOne(Long id){
         return em.find(Member.class,id);
