@@ -25,9 +25,7 @@ public class FingerGuardController {
     private final MemberService memberService;
     private final FingerGuardService fingerGuardService;
     @PostMapping("/guard")
-    public ResponseSaveGuard saveGuard(@RequestBody RequestSaveGuard requestSaveGuard) {
-
-        List<String> descriptions= new ArrayList<>();
+    public ResponseSaveGuard saveGuard(@SessionAttribute(name= SessionConst.LOGIN_MEMBER,required = false)Member member,@RequestBody RequestSaveGuard requestSaveGuard) {
         List<String> names = new ArrayList<>();
         Job job;
         if(requestSaveGuard.job == true){
@@ -35,14 +33,13 @@ public class FingerGuardController {
         }else{
             job = Job.NO;
         }
-        for (RequestSaveGuard.ProductDto productDto : requestSaveGuard.product) {
-            String description = productDto.getDescription();
-            String name = productDto.getName();
-            descriptions.add(description);
-            names.add(name);
-
+        for (RequestSaveGuard.ProductDto productName : requestSaveGuard.product) {
+            names.add(productName.getName());
         }
-        fingerGuardService.addFingerGuard(1L, descriptions,names,job);
+        /**
+         * 세션으로 교체필요
+         */
+        fingerGuardService.addFingerGuard(member.getMember_id(), names,job);
 
         return new ResponseSaveGuard("ok");
 
@@ -59,13 +56,11 @@ public class FingerGuardController {
     static class RequestSaveGuard {
         private List<ProductDto> product;
         private boolean job;
-
         @Data
-        static class ProductDto {
+        static class ProductDto{
             private String name;
-            private String description;
-
         }
+
     }
 
 

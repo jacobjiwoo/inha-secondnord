@@ -22,10 +22,24 @@ public class FingerPrincess {
     @OneToMany(mappedBy = "fingerPrincess",cascade = CascadeType.ALL)
     private List<Product> favProduct = new ArrayList<>();
 
+    @OneToOne(mappedBy = "fingerPrincess",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    Member member;
+
     private int questionNum;
 
     //비즈니스 로직
-
+    public static FingerPrincess createFingerPrincess(Member member,List<Brand> brands,List<Product> products){
+        FingerPrincess fingerPrincess = new FingerPrincess();
+        fingerPrincess.addMember(member);
+        for (Brand brand : brands) {
+            fingerPrincess.addBrand(brand);
+        }
+        for(Product product: products){
+            fingerPrincess.addProduct(product);
+        }
+        fingerPrincess.setQuestionNum(0);
+        return fingerPrincess;
+    }
     /**
      *질문개수 추가
      */
@@ -52,6 +66,10 @@ public class FingerPrincess {
     public void addProduct(Product product){
         favProduct.add(product);
         product.setFingerPrincess(this);
+    }
+    public void addMember(Member member){
+        this.member = member;
+        member.setFingerPrincess(this);
     }
 
 

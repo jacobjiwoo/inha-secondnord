@@ -15,7 +15,7 @@ public class Product {
     private Long id;
 
     private String name;
-    private String description;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="finger_princess_id")
