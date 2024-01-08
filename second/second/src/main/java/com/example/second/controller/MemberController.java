@@ -4,6 +4,8 @@ import com.example.second.Service.LoginService;
 import com.example.second.Service.MemberService;
 import com.example.second.SessionConst;
 import com.example.second.domain.Member;
+import com.example.second.domain.MemberRole;
+import com.example.second.exception.NotAdminException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -46,6 +48,7 @@ public class MemberController {
         member.setEmail(request.getEmail());
         member.setGender(request.getGender());
         member.setBirth(request.getBirth());
+        member.setRole(MemberRole.USER);
         String password = passwordEncoder.encode(request.getPassword());
         member.setPassword(password);
 
@@ -55,6 +58,8 @@ public class MemberController {
         return new CreateMemberResponse(member_id);
 
     }
+
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid CreateMemberLoginRequest request, HttpServletRequest servletRequest, HttpServletResponse response){
         Member loginMember = loginService.login(request.getId(),request.getPassword());
