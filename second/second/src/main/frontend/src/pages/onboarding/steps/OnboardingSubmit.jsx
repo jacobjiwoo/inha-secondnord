@@ -9,9 +9,7 @@ const parseJobValue = (data) => {
 };
 const handleOnboardingGuardSubmit = async (data) => {
   const productArr = [];
-  data.product.forEach((val) =>
-    productArr.push({ name: val, description: "" })
-  );
+  data.product.forEach((val) => productArr.push({ name: val }));
   data.product = productArr;
 
   console.log("request", data);

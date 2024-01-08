@@ -1,18 +1,19 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 function TabBar() {
   return (
-    <MainLayout>
-      <Outlet />
-      <TabBarLayout>
-        <TabBarItem>1</TabBarItem>
-        <TabBarItem>2</TabBarItem>
-        <TabBarItem>3</TabBarItem>
-        <TabBarItem>4</TabBarItem>
-        <TabBarItem>5</TabBarItem>
-      </TabBarLayout>
-    </MainLayout>
+    <TabBarLayout>
+      <TabBarItem>
+        <Link to="/home">홈</Link>
+      </TabBarItem>
+      <TabBarItem>2</TabBarItem>
+      <TabBarItem>3</TabBarItem>
+      <TabBarItem>4</TabBarItem>
+      <TabBarItem>
+        <Link to="/profile">내정보</Link>
+      </TabBarItem>
+    </TabBarLayout>
   );
 }
 

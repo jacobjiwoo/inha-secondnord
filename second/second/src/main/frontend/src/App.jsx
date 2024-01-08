@@ -5,11 +5,12 @@ import Join from "./pages/join/Join";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Login from "./pages/Login";
 import Onboarding from "./pages/onboarding/OnBoarding";
-import Header from "./components/Header";
 import Home from "./pages/Home";
 import OnboardingPrincess from "./pages/onboarding/princess/OnboardingPrincess";
 import OnboardingGuard from "./pages/onboarding/guard/OnboardingGuard";
 import TabBar from "./components/TabBar";
+import Profile from "./pages/Profile";
+import HomeLayout from "./layout/HomeLayout";
 
 function App() {
   return (
@@ -18,10 +19,11 @@ function App() {
       <Tablet>tablet</Tablet>
       <Mobile>
         <Routes>
-          <Route element={<TabBar />}>
+          <Route element={<HomeLayout />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
           </Route>
-          <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
           <Route path="/onboarding" element={<Onboarding />}>
             <Route path="princess" element={<OnboardingPrincess />} />
