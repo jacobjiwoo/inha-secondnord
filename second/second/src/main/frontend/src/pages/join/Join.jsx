@@ -7,8 +7,9 @@ import EmailStep from "./steps/EmailStep";
 import SubmitStep from "./steps/SubmitStep";
 import GenderAndBirthStep from "./steps/GenderAndBirthStep";
 import { DevTool } from "@hookform/devtools";
+import styled from "styled-components";
 
-const steps = ["genderAndbirth", "id", "password", "email"];
+const steps = ["genderAndbirth", "id", "password", "email", "submit"];
 const defaultValues = {
   birth: "",
   email: "",
@@ -18,10 +19,10 @@ const defaultValues = {
 };
 
 function Join() {
-  const [Funnel, Step, setStep] = useFunnel(steps[0]);
+  const { Funnel, Step, setStep } = useFunnel(steps[0]);
   const methods = useForm({ defaultValues, mode: "onChange" });
   return (
-    <>
+    <JoinLayout>
       <FormProvider {...methods}>
         <Funnel>
           <Step name="genderAndbirth">
@@ -44,8 +45,16 @@ function Join() {
         </Funnel>
       </FormProvider>
       <DevTool control={methods.control} />
-    </>
+    </JoinLayout>
   );
 }
 
 export default Join;
+
+const JoinLayout = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;

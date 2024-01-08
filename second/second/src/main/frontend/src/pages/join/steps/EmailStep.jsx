@@ -35,12 +35,12 @@ function EmailStep({ onNext }) {
           {...emailRegister}
         />
         <NextButton type="submit" />
-        <ErrorMessage
-          name="email"
-          errors={errors}
-          render={({ message }) => <h3>{message}</h3>}
-        />
       </form>
+      <ErrorMessage
+        name="email"
+        errors={errors}
+        render={({ message }) => <h3>{message}</h3>}
+      />
     </Wrapper>
   );
 }
@@ -48,8 +48,17 @@ function EmailStep({ onNext }) {
 export default EmailStep;
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: 1px solid red;
   width: 100vw;
+  & form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const NextButton = styled.input`

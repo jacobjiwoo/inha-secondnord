@@ -8,7 +8,7 @@ function IdStep({ onNext }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useFormContext();
 
   const handleIdSubmit = () => {
@@ -24,29 +24,38 @@ function IdStep({ onNext }) {
   });
 
   return (
-    <Wrapper>
+    <>
       <form onSubmit={handleSubmit(handleIdSubmit)}>
-        <label htmlFor="id">아이디</label>
-        <input id="id" type="text" maxLength={12} autoFocus {...idRegister} />
-        <NextButton type="submit" />
+        <InputWrapper htmlFor="id">
+          <input
+            id="id"
+            type="text"
+            maxLength={12}
+            placeholder="아이디"
+            autoFocus
+            {...idRegister}
+          />
+        </InputWrapper>
+        <FunnelButton type="submit" disabled={isValid ? false : true}>
+          다음
+        </FunnelButton>
         <ErrorMessage
           name="id"
           errors={errors}
           render={({ message }) => <h3>{message}</h3>}
         />
       </form>
-    </Wrapper>
+    </>
   );
 }
 
 export default IdStep;
 
-const Wrapper = styled.div`
-  border: 1px solid red;
-  width: 100vw;
+const InputWrapper = styled.label`
+  border: 1px solid blue;
 `;
 
-const NextButton = styled.input`
-  width: 50px;
+const FunnelButton = styled.button`
+  width: 80%;
   height: 50px;
 `;
