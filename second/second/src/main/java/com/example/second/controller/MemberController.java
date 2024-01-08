@@ -69,16 +69,13 @@ public class MemberController {
         session.setAttribute(SessionConst.LOGIN_MEMBER,loginMember);
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Set-Cookie",
-                "token=" + session.getId() + "; " +
+                "JSESSIONID=" + session.getId() + "; " +
                         "Path=/;" +
                         "Domain=localhost; " +
                         "HttpOnly; " +
                         "Max-Age=604800; "+"SameSite=None; Secure;"
         );
         return new ResponseEntity<>(session.getId(), HttpStatus.OK);
-
-
-
 
     }
     @PostMapping("/logout")
