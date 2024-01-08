@@ -1,30 +1,35 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { useFunnel } from "../../../useFunnel";
-import OnboardingCheckbox from "../onboardingCheckbox";
-import { guard_questions } from "../questions";
+import OnboardingCheckbox from "../steps/onboardingCheckbox";
+import { guard_queries } from "../OnboardingQuery";
 import { Link } from "react-router-dom";
 import { Suspense } from "react";
-import OnboardingSubmit from "../OnboardingSubmit";
+import OnboardingSubmit from "../steps/OnboardingSubmit";
+import OnboardingRadio from "../steps/OnboardingRadio";
+
+const steps = [guard_queries[0].key, guard_queries[1].key];
+const defaultValues = {
+  product: [],
+  job: false,
+};
 
 function OnboardingGuard() {
-  const { Funnel, Step, setStep } = useFunnel("q1");
-  const methods = useForm();
+  const { Funnel, Step, setStep } = useFunnel(steps[0]);
+  const methods = useForm({ defaultValues });
   return (
     <>
       <FormProvider {...methods}>
         <Funnel>
-          <Step name="q1">
+          <Step name={steps[0]}>
             <OnboardingCheckbox
-              onNext={() => setStep("q2")}
-              question={guard_questions[0].question}
-              choice={guard_questions[0].choice}
+              onNext={() => setStep(steps[1])}
+              query={guard_queries[0]}
             />
           </Step>
-          <Step name="q2">
-            <OnboardingCheckbox
+          <Step name={steps[1]}>
+            <OnboardingRadio
               onNext={() => setStep("submit")}
-              question={guard_questions[1].question}
-              choice={guard_questions[1].choice}
+              query={guard_queries[1]}
             />
           </Step>
           <Step name="submit">

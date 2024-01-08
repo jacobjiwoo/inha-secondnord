@@ -3,9 +3,22 @@ import axios from "axios";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 
+const parseJobValue = (data) => {
+  data.job === "예 " ? (data.job = true) : (data.job = false);
+  return data;
+};
 const handleOnboardingGuardSubmit = async (data) => {
+  const productArr = [];
+  data.product.forEach((val) =>
+    productArr.push({ name: val, description: "" })
+  );
+  data.product = productArr;
+
+  console.log("request", data);
+  data = parseJobValue(data);
+
   const response = await axios.post("/api/onboarding/guard", data);
-  console.log(response);
+  console.log("response", response);
   return response;
 };
 

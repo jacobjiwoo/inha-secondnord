@@ -1,27 +1,27 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { useFunnel } from "../../../useFunnel";
-import OnboardingCheckbox from "../onboardingCheckbox";
-import { princess_questions } from "../questions";
 import { Link } from "react-router-dom";
+import { princess_queries } from "../OnboardingQuery";
+import OnboardingCheckbox from "../steps/OnboardingCheckbox";
+
+const steps = [princess_queries[0].key, princess_queries[1].key];
 
 function OnboardingPrincess() {
-  const { Funnel, Step, setStep } = useFunnel("q1");
+  const { Funnel, Step, setStep } = useFunnel(steps[0]);
   const methods = useForm();
   return (
     <FormProvider {...methods}>
       <Funnel>
-        <Step name="q1">
+        <Step name={steps[0]}>
           <OnboardingCheckbox
-            onNext={() => setStep("q2")}
-            question={princess_questions[0].question}
-            choice={princess_questions[0].choice}
+            onNext={() => setStep(steps[1])}
+            query={princess_queries[0]}
           />
         </Step>
-        <Step name="q2">
+        <Step name={steps[1]}>
           <OnboardingCheckbox
             onNext={() => setStep("submit")}
-            question={princess_questions[1].question}
-            choice={princess_questions[1].choice}
+            query={princess_queries[1]}
           />
         </Step>
         <Step name="submit">

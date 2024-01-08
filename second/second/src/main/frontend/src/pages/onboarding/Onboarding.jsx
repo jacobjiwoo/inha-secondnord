@@ -1,5 +1,4 @@
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
-import { common_questions } from "./questions";
 import styled from "styled-components";
 
 function Onboarding() {
