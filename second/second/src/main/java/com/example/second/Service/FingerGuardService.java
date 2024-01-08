@@ -20,18 +20,17 @@ public class FingerGuardService {
     private final FingerGuardRepository fingerGuardRepository;
 
     @Transactional
-    public Long addFingerGuard(Long memberId, List<String> descriptions,List<String> names,Job job){
+    public Long addFingerGuard(Long memberId,List<String> names,Job job){
 
         List<Product> products= new ArrayList<>();
-        int size = descriptions.size();
+        int size = names.size();
         for(int i=0; i< size;i++){
             Product product = new Product();
 
-            String description = descriptions.get(i);
             String name = names.get(i);
 
             product.setName(name);
-            product.setDescription(description);
+
             products.add(product);
         }
 

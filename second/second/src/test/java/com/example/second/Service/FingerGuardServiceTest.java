@@ -38,17 +38,15 @@ public class FingerGuardServiceTest {
         member.setPassword("pasee121!");
         em.persist(member);
         List<String> names = new ArrayList<>();
-        List<String> descriptions = new ArrayList<>();
         names.add("radio");
-        descriptions.add("this is a radio");
         Job job = Job.YES;
         //when
-        Long fingerGuardId = fingerGuardService.addFingerGuard(member.getMember_id(), descriptions, names, job);
+        Long fingerGuardId = fingerGuardService.addFingerGuard(member.getMember_id(), names, job);
 
         //then
         FingerGuard getFingerGuard = fingerGuardRepository.findOne(fingerGuardId);
         Assert.assertEquals("핑거가드 등록시 product의 name은 radio이어야 한다. ","radio",getFingerGuard.getFavProduct().get(0).getName());
-        Assert.assertEquals("핑거가드 등록시 product의 description은 this is a radio 이어야 한다.","this is a radio",getFingerGuard.getFavProduct().get(0).getDescription());
+
     }
 
 }
