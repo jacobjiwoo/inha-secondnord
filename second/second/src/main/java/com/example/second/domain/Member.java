@@ -18,6 +18,9 @@ public class Member {
     @JoinColumn(name="finger_princess_id")
     FingerPrincess fingerPrincess;
 
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
+
     private String email;
 
     private String id;
