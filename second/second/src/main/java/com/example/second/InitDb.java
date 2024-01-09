@@ -1,13 +1,15 @@
 package com.example.second;
 
-import com.example.second.domain.Member;
-import com.example.second.domain.MemberRole;
+import com.example.second.domain.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -54,6 +56,13 @@ public class InitDb {
             member3.setRole(MemberRole.USER);
             String pas = passwordEncoder.encode("minm12");
             member3.setPassword(pas);
+
+            Job job = Job.YES;
+            Product product = new Product();
+            product.setName("radio");
+            List<Product> products= new ArrayList<>();
+            products.add(product);
+            FingerGuard.createFingerGuard(job,member3,products);
             em.persist(member3);
 
 

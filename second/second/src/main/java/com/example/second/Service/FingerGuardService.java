@@ -41,5 +41,11 @@ public class FingerGuardService {
 
 
     }
+    @Transactional(readOnly = true)
+    public List<FingerGuard> findFingerGuards(){
+        return fingerGuardRepository.findAll();
+    }
+
+
 
 }
