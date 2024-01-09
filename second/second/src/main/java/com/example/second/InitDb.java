@@ -56,14 +56,35 @@ public class InitDb {
             member3.setRole(MemberRole.USER);
             String pas = passwordEncoder.encode("minm12");
             member3.setPassword(pas);
-
+            em.persist(member3);
             Job job = Job.YES;
             Product product = new Product();
             product.setName("radio");
             List<Product> products= new ArrayList<>();
             products.add(product);
-            FingerGuard.createFingerGuard(job,member3,products);
-            em.persist(member3);
+            em.persist(product);
+            FingerGuard fingerGuard1 = FingerGuard.createFingerGuard(job, member3, products);
+            em.persist(fingerGuard1);
+
+            Member member4 =new Member();
+            member4.setId("misdf1");
+            member4.setEmail("minsdf9294");
+            member4.setGender("girl");
+            member4.setBirth("20032111");
+            member4.setRole(MemberRole.USER);
+            String pa = passwordEncoder.encode("min12");
+            member4.setPassword(pa);
+            em.persist(member4);
+            Job jobs = Job.YES;
+            Product produc = new Product();
+            produc.setName("mp3");
+            em.persist(produc);
+            List<Product> productss= new ArrayList<>();
+            productss.add(produc);
+            FingerGuard fingerGuard = FingerGuard.createFingerGuard(jobs, member4, productss);
+            fingerGuard.setAuthorizationGuard(AuthorizationGuard.AUTHORIZED);
+            em.persist(fingerGuard);
+
 
 
 

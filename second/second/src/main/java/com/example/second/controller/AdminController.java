@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -71,18 +72,23 @@ public class AdminController {
     @GetMapping("/users")
     public Result member(){
         List<Member> members = memberService.findMembers();
-        log.info("멤버개수 {}",members.size());
-        List<MemberDto> result = members.stream().map(m -> new MemberDto(m)).collect(Collectors.toList());
-        return new Result<>(result);
-        //List<FingerGuard> fingerGuards = fingerGuardRepository.findAllWithMember();
-        //List<FingerGuardDto> result = fingerGuards.stream()
-                //.map(f -> new FingerGuardDto(f)).collect(Collectors.toList());
-        //return new Result<>(result);
+        List<MemberDto> resultMember = members.stream().map(m -> new MemberDto(m)).collect(Collectors.toList());
+        return new Result<>(resultMember);
+
     }
+    @GetMapping("/users/guard")
+    public Result notAuthGuard(){
+        List<FingerGuard> fingerGuards = fingerGuardRepository.findAllWithMember();
+        List<FingerGuardDto> resultNotAuthorizedGuard = fingerGuards.stream().filter(fingerGuard -> fingerGuard.getAuthorizationGuard() == AuthorizationGuard.NOT_AUTHORIZED)
+                .map(f -> new FingerGuardDto(f)).collect(Collectors.toList());
+        return new Result<>(resultNotAuthorizedGuard);
+    }
+
     @Data
     @AllArgsConstructor
     static class Result<T>{
-        private T data;
+        private T allMember;
+
     }
     @Data
     static class MemberDto{
