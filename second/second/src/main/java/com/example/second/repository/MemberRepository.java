@@ -35,4 +35,5 @@ public class MemberRepository {
                 .filter(m -> m.getId().equals(loginId))
                 .findFirst();
     }
+
 }
