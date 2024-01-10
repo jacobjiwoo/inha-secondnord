@@ -30,6 +30,7 @@ public class FingerGuard {
 
     private int memberCount;
     private String openUrl;
+
     /**
      * 연관관계 편의 메서드
      */

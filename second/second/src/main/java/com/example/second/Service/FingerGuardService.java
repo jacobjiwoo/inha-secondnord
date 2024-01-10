@@ -1,9 +1,6 @@
 package com.example.second.Service;
 
-import com.example.second.domain.FingerGuard;
-import com.example.second.domain.Job;
-import com.example.second.domain.Member;
-import com.example.second.domain.Product;
+import com.example.second.domain.*;
 import com.example.second.repository.FingerGuardRepository;
 import com.example.second.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +41,11 @@ public class FingerGuardService {
     @Transactional(readOnly = true)
     public List<FingerGuard> findFingerGuards(){
         return fingerGuardRepository.findAll();
+    }
+    @Transactional
+    public void authorizingGuard(Long guardId){
+        FingerGuard one = fingerGuardRepository.findOne(guardId);
+        one.setAuthorizationGuard(AuthorizationGuard.AUTHORIZED);
     }
 
 

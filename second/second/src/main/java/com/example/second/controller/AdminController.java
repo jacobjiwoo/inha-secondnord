@@ -36,6 +36,8 @@ public class AdminController {
     private final LoginService loginService;
     private final MemberService memberService;
     private final FingerGuardRepository fingerGuardRepository;
+    private final FingerGuardService fingerGuardService;
+    private final MemberRepository memberRepository;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotAdminException.class)
@@ -82,6 +84,22 @@ public class AdminController {
         List<FingerGuardDto> resultNotAuthorizedGuard = fingerGuards.stream().filter(fingerGuard -> fingerGuard.getAuthorizationGuard() == AuthorizationGuard.NOT_AUTHORIZED)
                 .map(f -> new FingerGuardDto(f)).collect(Collectors.toList());
         return new Result<>(resultNotAuthorizedGuard);
+    }
+    @PatchMapping("/users/guard")
+    public Result AuthorizingGuard(@RequestBody RequestNotAuthorizedGuard requestNotAuthorizedGuard){
+        for (RequestNotAuthorizedGuard.NotAuthorizedMember notAuthorizedMember : requestNotAuthorizedGuard.allMember) {
+            Long fingerGuardId = memberRepository.findOne(notAuthorizedMember.getMember_id()).getFingerGuard().getId();
+            fingerGuardService.authorizingGuard(fingerGuardId);
+        }
+        return new Result<>("ok");
+    }
+    @Data
+    static class RequestNotAuthorizedGuard{
+        private List<NotAuthorizedMember> allMember;
+        @Data
+        static class NotAuthorizedMember{
+            Long member_id;
+        }
     }
 
     @Data
