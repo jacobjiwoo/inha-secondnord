@@ -2,7 +2,7 @@ package com.example.second.repository;
 
 import com.example.second.domain.FingerGuard;
 import com.example.second.domain.Member;
-import com.example.second.domain.Product;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;

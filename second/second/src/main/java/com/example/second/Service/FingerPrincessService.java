@@ -1,9 +1,9 @@
 package com.example.second.Service;
 
-import com.example.second.domain.Brand;
-import com.example.second.domain.FingerPrincess;
-import com.example.second.domain.Member;
-import com.example.second.domain.Product;
+import com.example.second.domain.*;
+
+import com.example.second.repository.BrandRepository;
+import com.example.second.repository.CategoryRepository;
 import com.example.second.repository.FingerPrincessRepository;
 import com.example.second.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,35 +18,28 @@ import java.util.List;
 public class FingerPrincessService {
     private final MemberRepository memberRepository;
     private final FingerPrincessRepository fingerPrincessRepository;
+    private final CategoryRepository categoryRepository;
+    private final BrandRepository brandRepository;
 
     @Transactional
-    public Long addFingerPrincess(Long memberId, List<String> productNames,List<String> brandNames){
-        List<Product> products = new ArrayList<>();
-        List<Brand> brands = new ArrayList<>();
-        int productsSize = products.size();
-        int brandsSize = brands.size();
-        for(int i=0; i< productsSize;i++){
-            Product product = new Product();
+    public Long addFingerPrincess(Long memberId, List<Long> categoryIds,List<Long> brandIds){
+        List<FingerPrincessCategory> fingerPrincessCategories = new ArrayList<>();
+        List<FingerPrincessBrand> fingerPrincessBrands = new ArrayList<>();
+        for(Long id:categoryIds){
+            Category findCategory = categoryRepository.findOne(id);
+            FingerPrincessCategory fingerPrincessCategory = FingerPrincessCategory.createFingerPrincessCategory(findCategory);
+            fingerPrincessCategories.add(fingerPrincessCategory);
 
-            String name = productNames.get(i);
-
-            product.setName(name);
-
-            products.add(product);
         }
-        for(int i=0; i< brandsSize;i++){
-            Brand brand = new Brand();
+        for(Long id:brandIds){
+            Brand findBrand = brandRepository.findOne(id);
+            FingerPrincessBrand fingerPrincessBrand = FingerPrincessBrand.createFingerPrincessBrand(findBrand);
+            fingerPrincessBrands.add(fingerPrincessBrand);
 
-            String name = brandNames.get(i);
-
-            brand.setName(name);
-
-            brands.add(brand);
         }
         Member findMember = memberRepository.findOne(memberId);
-        FingerPrincess fingerPrincess = FingerPrincess.createFingerPrincess(findMember, brands, products);
+        FingerPrincess fingerPrincess = FingerPrincess.createFingerPrincess(findMember, fingerPrincessBrands, fingerPrincessCategories);
         fingerPrincessRepository.save(fingerPrincess);
-
         return fingerPrincess.getId();
 
 

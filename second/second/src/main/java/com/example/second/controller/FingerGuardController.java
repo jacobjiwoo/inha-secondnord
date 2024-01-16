@@ -5,7 +5,6 @@ import com.example.second.Service.MemberService;
 import com.example.second.SessionConst;
 import com.example.second.domain.Job;
 import com.example.second.domain.Member;
-import com.example.second.domain.Product;
 import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.Getter;
@@ -26,20 +25,26 @@ public class FingerGuardController {
     private final FingerGuardService fingerGuardService;
     @PostMapping("/guard")
     public ResponseSaveGuard saveGuard(@SessionAttribute(name= SessionConst.LOGIN_MEMBER,required = false)Member member,@RequestBody RequestSaveGuard requestSaveGuard) {
-        List<String> names = new ArrayList<>();
+        //경험
         Job job;
         if(requestSaveGuard.job == true){
             job = Job.YES;
         }else{
             job = Job.NO;
         }
-        for (RequestSaveGuard.ProductDto productName : requestSaveGuard.product) {
-            names.add(productName.getName());
+        //카테고리 아이디
+        List<Long> categoryId = new ArrayList<>();
+        for (RequestSaveGuard.CategoryDto categoryDto : requestSaveGuard.category) {
+            Long id = categoryDto.getId();
+            categoryId.add(id);
         }
-        /**
-         * 세션으로 교체필요
-         */
-        fingerGuardService.addFingerGuard(member.getMember_id(), names,job);
+        //오픈url
+        String openUrl = requestSaveGuard.getOpen_url();
+        //소개
+        String introduction = requestSaveGuard.getIntroduction();
+
+
+        fingerGuardService.addFingerGuard(member.getMember_id(),categoryId,openUrl,introduction,job);
 
         return new ResponseSaveGuard("ok");
 
@@ -54,11 +59,13 @@ public class FingerGuardController {
     }
     @Data
     static class RequestSaveGuard {
-        private List<ProductDto> product;
+        private List<CategoryDto> category;
+        private String introduction;
+        private String open_url;
         private boolean job;
         @Data
-        static class ProductDto{
-            private String name;
+        static class CategoryDto{
+            private Long id;
         }
 
     }
