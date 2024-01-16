@@ -18,9 +18,10 @@ public class FingerPrincess {
     @Column(name="finger_princess_id")
     private Long id;
     @OneToMany(mappedBy = "fingerPrincess",cascade = CascadeType.ALL)
-    private List<Brand> favBrand = new ArrayList<>();
+    private List<FingerPrincessBrand> fingerPrincessBrands = new ArrayList<>();
+
     @OneToMany(mappedBy = "fingerPrincess",cascade = CascadeType.ALL)
-    private List<Product> favProduct = new ArrayList<>();
+    private List<FingerPrincessCategory> fingerPrincessCategories = new ArrayList<>();
 
     @OneToOne(mappedBy = "fingerPrincess",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     Member member;
@@ -28,16 +29,16 @@ public class FingerPrincess {
     private int questionNum;
 
     //비즈니스 로직
-    public static FingerPrincess createFingerPrincess(Member member,List<Brand> brands,List<Product> products){
+    public static FingerPrincess createFingerPrincess(Member member,List<FingerPrincessBrand> brands,List<FingerPrincessCategory> categories){
         FingerPrincess fingerPrincess = new FingerPrincess();
-        fingerPrincess.addMember(member);
-        for (Brand brand : brands) {
-            fingerPrincess.addBrand(brand);
-        }
-        for(Product product: products){
-            fingerPrincess.addProduct(product);
-        }
         fingerPrincess.setQuestionNum(0);
+        fingerPrincess.addMember(member);
+        for (FingerPrincessCategory fingerPrincessCategory : categories) {
+            fingerPrincess.addFingerPrincessCategory(fingerPrincessCategory);
+        }
+        for(FingerPrincessBrand fingerPrincessBrand: brands){
+            fingerPrincess.addFingerPrincessBrand(fingerPrincessBrand);
+        }
         return fingerPrincess;
     }
     /**
@@ -59,13 +60,16 @@ public class FingerPrincess {
     /**
      * 연관관계 편의 메서드
      */
-    public void addBrand(Brand brand){
-        favBrand.add(brand);
-        brand.setFingerPrincess(this);
+
+    //채워야함
+    public void addFingerPrincessCategory(FingerPrincessCategory fingerPrincessCategory){
+        fingerPrincessCategories.add(fingerPrincessCategory);
+        fingerPrincessCategory.setFingerPrincess(this);
+
     }
-    public void addProduct(Product product){
-        favProduct.add(product);
-        product.setFingerPrincess(this);
+    public void addFingerPrincessBrand(FingerPrincessBrand fingerPrincessBrand){
+        fingerPrincessBrands.add(fingerPrincessBrand);
+        fingerPrincessBrand.setFingerPrincess(this);
     }
     public void addMember(Member member){
         this.member = member;

@@ -1,20 +1,22 @@
 package com.example.second.repository;
 
-import com.example.second.domain.Brand;
-
 import com.example.second.domain.Category;
+import com.example.second.domain.Member;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BrandRepository {
+public class CategoryRepository {
     @PersistenceContext
     private EntityManager em;
-    public void save(Brand brand){
-        em.persist(brand);
+
+    public void save(Category category){
+        em.persist(category);
     }
-    public Brand findOne(Long id){
-        return em.find(Brand.class,id);
+    public Category findOne(Long id){
+        return em.find(Category.class,id);
     }
+
 }

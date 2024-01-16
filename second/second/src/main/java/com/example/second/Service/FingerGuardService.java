@@ -1,6 +1,8 @@
 package com.example.second.Service;
 
 import com.example.second.domain.*;
+import com.example.second.repository.CategoryRepository;
+import com.example.second.repository.FingerGuardCategoryRepository;
 import com.example.second.repository.FingerGuardRepository;
 import com.example.second.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,24 +17,21 @@ import java.util.List;
 public class FingerGuardService {
     private final MemberRepository memberRepository;
     private final FingerGuardRepository fingerGuardRepository;
+    private final CategoryRepository categoryRepository;
+    private final FingerGuardCategoryRepository fingerGuardCategoryRepository;
 
     @Transactional
-    public Long addFingerGuard(Long memberId,List<String> names,Job job){
+    public Long addFingerGuard(Long memberId,List<Long> categoryIds,String openurl,String introduction,Job job){
 
-        List<Product> products= new ArrayList<>();
-        int size = names.size();
-        for(int i=0; i< size;i++){
-            Product product = new Product();
-
-            String name = names.get(i);
-
-            product.setName(name);
-
-            products.add(product);
+        List<FingerGuardCategory> fingerGuardCategories= new ArrayList<>();
+        for(Long id:categoryIds){
+            Category findCategory = categoryRepository.findOne(id);
+            FingerGuardCategory fingerGuardCategory = FingerGuardCategory.createFingerGuardCategory(findCategory);
+            fingerGuardCategories.add(fingerGuardCategory);
         }
 
         Member member = memberRepository.findOne(memberId);
-        FingerGuard fingerGuard = FingerGuard.createFingerGuard(job, member, products);
+        FingerGuard fingerGuard = FingerGuard.createFingerGuard(job, member, fingerGuardCategories,introduction,openurl);
         fingerGuardRepository.save(fingerGuard);
         return fingerGuard.getId();
 

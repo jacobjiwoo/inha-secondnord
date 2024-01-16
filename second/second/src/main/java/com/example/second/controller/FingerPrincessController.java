@@ -4,7 +4,7 @@ import com.example.second.Service.FingerGuardService;
 import com.example.second.Service.FingerPrincessService;
 import com.example.second.SessionConst;
 import com.example.second.domain.Member;
-import com.example.second.domain.Product;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -20,23 +20,19 @@ import java.util.List;
 @Slf4j
 public class FingerPrincessController {
     private final FingerPrincessService fingerPrincessService;
-    @PostMapping("princess")
+    @PostMapping("/princess")
     public ResponseSavePrincess savePrincess(@SessionAttribute(name= SessionConst.LOGIN_MEMBER,required = false) Member member, @RequestBody RequestSavePrincess requestSavePrincess){
-        log.info("프로덕트 {}",requestSavePrincess.product);
-        log.info("브랜드 {}",requestSavePrincess.brand);
-        List<String> productNames = new ArrayList<>();
-        List<String> brandNames = new ArrayList<>();
-        for(RequestSavePrincess.PrincessProductDto productDto:requestSavePrincess.product){
-            String name = productDto.getName();
-            productNames.add(name);
+        List<Long> categoryIds = new ArrayList<>();
+        List<Long> brandIds =new ArrayList<>();
+        for (RequestSavePrincess.PrincessCategoryDto categoryDto : requestSavePrincess.category) {
+            Long id = categoryDto.getId();
+            categoryIds.add(id);
         }
-        for(RequestSavePrincess.PrincessBrandDto brandDto:requestSavePrincess.brand){
-            brandNames.add(brandDto.getName());
+        for(RequestSavePrincess.PrincessBrandDto brandDto:requestSavePrincess.brand) {
+            Long id = brandDto.getId();
+            brandIds.add(id);
         }
-        /**
-         *세션으로 교체필요
-         */
-        Long aLong = fingerPrincessService.addFingerPrincess(member.getMember_id(), productNames, brandNames);
+        Long aLong = fingerPrincessService.addFingerPrincess(member.getMember_id(), categoryIds, brandIds);
 
 
         return new ResponseSavePrincess("ok");
@@ -44,16 +40,16 @@ public class FingerPrincessController {
 
     @Data
     static class RequestSavePrincess{
-        private List<PrincessProductDto> product;
+        private List<PrincessCategoryDto> category;
         private List<PrincessBrandDto> brand;
         @Data
-        static class PrincessProductDto{
-            private String name;
+        static class PrincessCategoryDto{
+            private Long id;
         }
 
         @Data
         static class PrincessBrandDto{
-            private String name;
+            private Long id;
         }
 
 

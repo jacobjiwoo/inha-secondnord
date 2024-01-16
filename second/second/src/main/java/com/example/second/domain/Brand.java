@@ -10,12 +10,10 @@ import lombok.Setter;
 public class Brand {
     @Id
     @GeneratedValue
-    @Column(name="Brand_id")
+    @Column(name="brand_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "finger_princess_id")
-    FingerPrincess fingerPrincess;
+
 
     private String name;
 }
