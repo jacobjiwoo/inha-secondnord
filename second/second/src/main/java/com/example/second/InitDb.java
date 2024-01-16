@@ -54,6 +54,16 @@ public class InitDb {
             Member member3 = createMember("min0419294","min04192@Gamil.com","man","20030132",MemberRole.USER,"passe1");
             em.persist(member3);
 
+
+            List<FingerPrincessBrand> fingerPrincessBrands = new ArrayList<>();
+            FingerPrincessBrand fingerPrincessBrand1 = FingerPrincessBrand.createFingerPrincessBrand(brand1);
+            fingerPrincessBrands.add(fingerPrincessBrand1);
+            List<FingerPrincessCategory> fingerPrincessCategories = new ArrayList<>();
+            FingerPrincessCategory fingerPrincessCategory = FingerPrincessCategory.createFingerPrincessCategory(category1);
+            fingerPrincessCategories.add(fingerPrincessCategory);
+            FingerPrincess fingerPrincess = FingerPrincess.createFingerPrincess(member2, fingerPrincessBrands, fingerPrincessCategories);
+            em.persist(fingerPrincess);
+
 //
 //            Member member3 =new Member();
 //

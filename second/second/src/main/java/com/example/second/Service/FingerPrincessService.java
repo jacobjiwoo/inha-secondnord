@@ -44,6 +44,12 @@ public class FingerPrincessService {
 
 
     }
+    @Transactional
+    public int addQuestion(Long princessId,int num){
+        FingerPrincess findOne = fingerPrincessRepository.findOne(princessId);
+        findOne.addQuestionNum(num);
+        return findOne.getQuestionNum();
+    }
 
 
 }
