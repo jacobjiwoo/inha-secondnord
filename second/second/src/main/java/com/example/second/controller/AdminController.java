@@ -1,13 +1,11 @@
 package com.example.second.controller;
 
 import com.example.second.Service.FingerGuardService;
+import com.example.second.Service.FingerPrincessService;
 import com.example.second.Service.LoginService;
 import com.example.second.Service.MemberService;
 import com.example.second.SessionConst;
-import com.example.second.domain.AuthorizationGuard;
-import com.example.second.domain.FingerGuard;
-import com.example.second.domain.Member;
-import com.example.second.domain.MemberRole;
+import com.example.second.domain.*;
 import com.example.second.exception.NotAdminException;
 import com.example.second.repository.FingerGuardRepository;
 import com.example.second.repository.MemberRepository;
@@ -25,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.Role;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +37,7 @@ public class AdminController {
     private final FingerGuardRepository fingerGuardRepository;
     private final FingerGuardService fingerGuardService;
     private final MemberRepository memberRepository;
+    private final FingerPrincessService fingerPrincessService;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotAdminException.class)
@@ -71,6 +71,7 @@ public class AdminController {
         return new ResponseEntity<>(session.getId(), HttpStatus.OK);
 
     }
+
     @GetMapping("/users")
     public Result member(){
         List<Member> members = memberService.findMembers();
@@ -92,6 +93,40 @@ public class AdminController {
             fingerGuardService.authorizingGuard(fingerGuardId);
         }
         return new Result<>("ok");
+    }
+
+    @PatchMapping("/users/princess")
+    public ResponseQuestionNum addQuestion(@RequestBody RequestQuestionNum requestQuestionNum){
+        ResponseQuestionNum responseQuestionNum = new ResponseQuestionNum();
+        for(RequestQuestionNum.RequestQuestionMember questionMember:requestQuestionNum.allMember){
+            Long fingerPrincessId = memberRepository.findOne(questionMember.getMember_id()).getFingerPrincess().getId();
+            int remainQuestionNum = fingerPrincessService.addQuestion(fingerPrincessId, questionMember.getQuestion_num());
+            ResponseQuestionNum.ResponseQuestionMember responseQuestionMember = new ResponseQuestionNum.ResponseQuestionMember();
+            responseQuestionMember.setQuestion_num(remainQuestionNum);
+            responseQuestionMember.setMember_id(questionMember.getMember_id());
+            responseQuestionNum.allMember.add(responseQuestionMember);
+        }
+        return responseQuestionNum;
+
+    }
+    @Data
+    static class ResponseQuestionNum{
+        private List<ResponseQuestionMember> allMember =new ArrayList<>();
+        @Data
+        static class ResponseQuestionMember{
+            private Long member_id;
+            private int question_num;
+        }
+    }
+    @Data
+    static class RequestQuestionNum{
+        private List<RequestQuestionMember> allMember;
+        @Data
+        static class RequestQuestionMember{
+            private Long member_id;
+            private int question_num;
+        }
+
     }
     @Data
     static class RequestNotAuthorizedGuard{
