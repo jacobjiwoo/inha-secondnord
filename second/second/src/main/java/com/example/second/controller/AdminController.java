@@ -8,6 +8,7 @@ import com.example.second.SessionConst;
 import com.example.second.domain.*;
 import com.example.second.exception.NotAdminException;
 import com.example.second.repository.FingerGuardRepository;
+import com.example.second.repository.FingerPrincessRepository;
 import com.example.second.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,6 +36,7 @@ public class AdminController {
     private final LoginService loginService;
     private final MemberService memberService;
     private final FingerGuardRepository fingerGuardRepository;
+    private final FingerPrincessRepository fingerPrincessRepository;
     private final FingerGuardService fingerGuardService;
     private final MemberRepository memberRepository;
     private final FingerPrincessService fingerPrincessService;
@@ -86,6 +88,13 @@ public class AdminController {
                 .map(f -> new FingerGuardDto(f)).collect(Collectors.toList());
         return new Result<>(resultNotAuthorizedGuard);
     }
+    @GetMapping("/users/princess")
+    public Result fingerPrincess(){
+        List<FingerPrincess> fingerPrincesses = fingerPrincessRepository.findAllWithMember();
+        List<FingerPrincessDto> resultFingerPrincess = fingerPrincesses.stream().map(f->new FingerPrincessDto(f)).collect(Collectors.toList());
+        return new Result<>(resultFingerPrincess);
+    }
+
     @PatchMapping("/users/guard")
     public Result AuthorizingGuard(@RequestBody RequestNotAuthorizedGuard requestNotAuthorizedGuard){
         for (RequestNotAuthorizedGuard.NotAuthorizedMember notAuthorizedMember : requestNotAuthorizedGuard.allMember) {
@@ -165,6 +174,20 @@ public class AdminController {
             id = member.getId();
             password = member.getPassword();
             memberRole = member.getRole();
+        }
+    }
+    @Data
+    static class FingerPrincessDto{
+        private Long member_id;
+        private String id;
+        private String email;
+        private int question_num;
+
+        public FingerPrincessDto(FingerPrincess fingerPrincess) {
+            this.member_id = fingerPrincess.getMember().getMember_id();
+            this.id = fingerPrincess.getMember().getId();
+            this.email = fingerPrincess.getMember().getEmail();
+            this.question_num = fingerPrincess.getQuestionNum();
         }
     }
     @Data
