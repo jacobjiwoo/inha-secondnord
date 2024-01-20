@@ -64,6 +64,21 @@ public class InitDb {
             FingerPrincess fingerPrincess = FingerPrincess.createFingerPrincess(member2, fingerPrincessBrands, fingerPrincessCategories);
             em.persist(fingerPrincess);
 
+            List<FingerGuardCategory> fingerGuardCategories = new ArrayList<>();
+            FingerGuardCategory fingerGuardCategory = FingerGuardCategory.createFingerGuardCategory(category1);
+            fingerGuardCategories.add(fingerGuardCategory);
+            FingerGuardCategory fingerGuardCategory1 = FingerGuardCategory.createFingerGuardCategory(category2);
+            fingerGuardCategories.add(fingerGuardCategory1);
+            FingerGuard fingerGuard = FingerGuard.createFingerGuard(Job.YES, member2, fingerGuardCategories, "안녕하세요 핑가입니다", "openrulrul");
+            em.persist(fingerGuard);
+
+            List<FingerGuardCategory> fingerGuardCategories1 = new ArrayList<>();
+            FingerGuardCategory fingerGuardCategory2 = FingerGuardCategory.createFingerGuardCategory(category2);
+            fingerGuardCategories1.add(fingerGuardCategory2);
+            FingerGuardCategory fingerGuardCategory3 = FingerGuardCategory.createFingerGuardCategory(category3);
+            fingerGuardCategories1.add(fingerGuardCategory3);
+            FingerGuard fingerGuard1 = FingerGuard.createFingerGuard(Job.NO, member3, fingerGuardCategories1, "핑거가드일까요", "open");
+            em.persist(fingerGuard1);
 //
 //            Member member3 =new Member();
 //
