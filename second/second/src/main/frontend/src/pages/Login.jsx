@@ -4,6 +4,8 @@ import axios from "axios";
 import styled from "styled-components";
 import { useState } from "react";
 import { ErrorMessage } from "@hookform/error-message";
+import { LeftArrow, PasswordEye } from "../assets/svg";
+import { DevTool } from "@hookform/devtools";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,22 +16,26 @@ function Login() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm();
+    control,
+  } = useForm({ mode: "onChange" });
 
   const idRegister = register("id", {
     required: { value: true, message: "아이디를 입력해주세요" },
-    minLength: { value: 6, message: "6~12글자" },
-    maxLength: { value: 12, message: "6~12글자" },
-    pattern: { value: /^[A-Za-z0-9]+$/, message: "영문, 숫자" },
+    minLength: { value: 6, message: "6~12글자로 입력해주세요" },
+    maxLength: { value: 12, message: "6~12글자로 입력해주세요" },
+    pattern: {
+      value: /^[A-Za-z0-9]+$/,
+      message: "영문, 숫자만 사용 가능합니다",
+    },
   });
 
   const passwordRegister = register("password", {
     required: { value: true, message: "비밀번호를 입력해주세요" },
-    minLength: { value: 8, message: "8~20글자" },
-    maxLength: { value: 20, message: "8~20글자" },
+    minLength: { value: 8, message: "8~20글자로 입력해주세요" },
+    maxLength: { value: 20, message: "8~20글자로 입력해주세요" },
     pattern: {
       value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
-      message: "영문, 숫자, 특수기호 포함",
+      message: "영문, 숫자, 특수기호를 포함해야 합니다",
     },
   });
 
@@ -46,38 +52,53 @@ function Login() {
 
   return (
     <LoginLayout>
+      <header className="header-login">
+        <div className="prev-button" onClick={() => navigate(-1)}>
+          <LeftArrow fill={"black"} />
+        </div>
+      </header>
+      <h2 className="login-title">로그인</h2>
+      <div className="login-type"></div>
       <LoginBox>
         <form onSubmit={handleSubmit(handleLoginSubmit)}>
-          <Input
-            id="id"
-            type="text"
-            placeholder="아이디"
-            {...idRegister}
-            autoFocus
-          />
-          <ErrorMessage
-            name="id"
-            errors={errors}
-            render={({ message }) => <span>{message}</span>}
-          />
-          <Input
-            id="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="비밀번호"
-            {...passwordRegister}
-          />
-          <ErrorMessage
-            name="password"
-            errors={errors}
-            render={({ message }) => <span>{message}</span>}
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            비밀번호 표시
-          </button>
-          <span style={{ color: "red" }}>{loginErrors}</span>
+          <InputContainer>
+            <Input
+              type="text"
+              placeholder="아이디"
+              maxLength={12}
+              {...idRegister}
+            />
+            <ErrorMessage
+              name="id"
+              errors={errors}
+              render={({ message }) => (
+                <span className="error-message">{message}</span>
+              )}
+            />
+          </InputContainer>
+          <InputContainer>
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="비밀번호"
+              maxLength={20}
+              {...passwordRegister}
+            />
+
+            <div
+              className="password-eye"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              <PasswordEye />
+            </div>
+            <ErrorMessage
+              name="password"
+              errors={errors}
+              render={({ message }) => (
+                <span className="error-message">{message}</span>
+              )}
+            />
+          </InputContainer>
+          <span className="login-error">{loginErrors}</span>
           <Button className="submit" type="submit">
             로그인
           </Button>
@@ -90,30 +111,54 @@ function Login() {
 
 export default Login;
 
-const FlexCenterBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const LoginLayout = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   width: 100vw;
   height: 100vh;
+
+  & .header-login {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    padding-left: 3rem;
+    background-color: #fff;
+
+    & .prev-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 0.3rem;
+      cursor: pointer;
+    }
+
+    & svg {
+      width: 1rem;
+      height: 1.5rem;
+    }
+  }
+
+  & .login-title {
+    margin-top: 10rem;
+    margin-bottom: 3rem;
+  }
+
+  & .login-type {
+    width: 20rem;
+    height: 2rem;
+    margin-bottom: 2rem;
+    /* border-bottom: 0.1rem solid #9852f9; */
+  }
 `;
 
 const LoginBox = styled.div`
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  height: 40%;
-  border-color: #9852f9;
-  border-radius: 10px;
 
   & form {
     display: flex;
@@ -123,15 +168,47 @@ const LoginBox = styled.div`
     width: 100%;
     height: 100%;
   }
+
+  & .login-error {
+    color: red;
+    margin-bottom: 1rem;
+  }
+`;
+
+const InputContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  & .error-message {
+    padding-left: 1rem;
+    color: red;
+  }
+
+  & .password-eye {
+    position: absolute;
+    top: 0.6rem;
+    right: 1rem;
+    cursor: pointer;
+
+    & svg {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
 `;
 
 const Input = styled.input`
+  width: 20rem;
+  height: 3rem;
+  margin-bottom: 0.3rem;
   border: none;
-  width: 60%;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  padding: 10px;
-  box-shadow: 0 0 0 1px #979797;
+  border-radius: 0.5rem;
+  background-color: #f1f1f1;
+  padding-left: 1rem;
+
   &:focus {
     outline: none;
   }
@@ -141,12 +218,12 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
-  height: 2rem;
-  border-radius: 10px;
-  font-size: 1rem;
-  color: white;
-  background-color: #9852f9;
+  width: 20rem;
+  height: 2.5rem;
+  margin-bottom: 1rem;
   border: none;
+  border-radius: 4.5rem;
+  background-color: #9852f9;
+  color: #f1f1f1;
   cursor: pointer;
 `;
