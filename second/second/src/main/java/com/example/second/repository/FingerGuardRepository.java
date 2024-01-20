@@ -26,4 +26,8 @@ public class FingerGuardRepository {
         return em.createQuery("select f from FingerGuard f"+
                 " join fetch f.member m",FingerGuard.class).getResultList();
     }
+    public List<FingerGuard> findAllWithMemberAndCategories(){
+        return em.createQuery("select distinct f from FingerGuard f"
+        +" join fetch f.member m"+ " join fetch f.fingerGuardCategories fc").getResultList();
+    }
 }
