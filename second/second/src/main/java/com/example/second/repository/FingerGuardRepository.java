@@ -30,4 +30,9 @@ public class FingerGuardRepository {
         return em.createQuery("select distinct f from FingerGuard f"
         +" join fetch f.member m"+ " join fetch f.fingerGuardCategories fc").getResultList();
     }
+    public FingerGuard findWithCategoriesAndMember(Long id){
+        return em.createQuery("select f from FingerGuard f"+
+                " join fetch f.fingerGuardCategories fgc" +" join fetch f.member" +" where f.id = :fingerGuardId", FingerGuard.class).setParameter("fingerGuardId",id).getSingleResult();
+    }
+
 }
