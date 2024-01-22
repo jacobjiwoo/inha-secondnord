@@ -3,6 +3,7 @@ package com.example.second.controller;
 import com.example.second.domain.Category;
 import com.example.second.domain.FingerGuard;
 import com.example.second.domain.FingerGuardCategory;
+import com.example.second.domain.Job;
 import com.example.second.repository.CategoryRepository;
 import com.example.second.repository.FingerGuardRepository;
 import lombok.AllArgsConstructor;
@@ -59,6 +60,53 @@ public class HomeController {
 
         return responseCategory;
     }
+
+    @GetMapping("/profile/guard/{finger_guard_id}")
+    public ResponseGuard guardProfile(@PathVariable("finger_guard_id")Long id){
+        FingerGuard withCategoriesAndMember = fingerGuardRepository.findWithCategoriesAndMember(id);
+        List<FingerGuardCategory> fingerGuardCategories = withCategoriesAndMember.getFingerGuardCategories();
+        List<ResponseGuard.ResponseCategory> collect = fingerGuardCategories.stream().map(f -> new ResponseGuard.ResponseCategory(f)).collect(Collectors.toList());
+        ResponseGuard responseGuard = new ResponseGuard(withCategoriesAndMember,collect);
+
+        return responseGuard;
+    }
+    @Data
+    static class ResponseGuard{
+        private Long finger_guard_id;
+        private String id;
+        private List<ResponseCategory> categories;
+
+        public ResponseGuard(FingerGuard fingerGuard,List<ResponseCategory> responseCategory) {
+            this.finger_guard_id = fingerGuard.getId();
+            this.id = fingerGuard.getMember().getId();
+            this.categories = responseCategory;
+            this.introduction = fingerGuard.getIntroduction();
+            if(fingerGuard.getJob()== Job.YES){
+                this.job = true;
+            }
+            else{
+                this.job = false;
+            }
+
+            this.open_url = fingerGuard.getOpenUrl();
+        }
+
+        @Data
+        static class ResponseCategory{
+            private Long category_id;
+            private String name;
+
+            public ResponseCategory(FingerGuardCategory fingerGuardCategory) {
+                this.category_id = fingerGuardCategory.getCategory().getId();
+                this.name = fingerGuardCategory.getCategory().getName();
+            }
+        }
+        private String introduction;
+        private Boolean job;
+        private String open_url;
+
+    }
+
     @Data
     static class ResponseCategory{
         private List<AllMemberDto> allMember=new ArrayList<>();
