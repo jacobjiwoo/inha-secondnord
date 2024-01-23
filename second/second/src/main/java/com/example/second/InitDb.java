@@ -79,6 +79,43 @@ public class InitDb {
             fingerGuardCategories1.add(fingerGuardCategory3);
             FingerGuard fingerGuard1 = FingerGuard.createFingerGuard(Job.NO, member3, fingerGuardCategories1, "핑거가드일까요", "open");
             em.persist(fingerGuard1);
+
+            for(int i =0; i < 11; i++){
+                Member member = createMember("test"+i,"test"+i+"@naver.com","man","200302"+i,MemberRole.USER,"pass"+i);
+                List<FingerGuardCategory> fingerGuardCategories11 = new ArrayList<>();
+                FingerGuardCategory fingerGuardCategory4 = FingerGuardCategory.createFingerGuardCategory(category1);
+                fingerGuardCategories11.add(fingerGuardCategory4);
+                FingerGuardCategory fingerGuardCategory5 = FingerGuardCategory.createFingerGuardCategory(category2);
+                fingerGuardCategories11.add(fingerGuardCategory5);
+
+                FingerGuard fingerGuard2 = FingerGuard.createFingerGuard(Job.YES, member, fingerGuardCategories11, "i am a test" + i, "openurl" + i);
+                em.persist(fingerGuard2);
+            }
+            for(int i =11; i < 21; i++){
+                Member member = createMember("test"+i,"test"+i+"@naver.com","man","200302"+i,MemberRole.USER,"pass"+i);
+                List<FingerGuardCategory> fingerGuardCategories11 = new ArrayList<>();
+                FingerGuardCategory fingerGuardCategory4 = FingerGuardCategory.createFingerGuardCategory(category2);
+                fingerGuardCategories11.add(fingerGuardCategory4);
+                FingerGuardCategory fingerGuardCategory5 = FingerGuardCategory.createFingerGuardCategory(category3);
+                fingerGuardCategories11.add(fingerGuardCategory5);
+                FingerGuardCategory fingerGuardCategory6 = FingerGuardCategory.createFingerGuardCategory(category1);
+                fingerGuardCategories11.add(fingerGuardCategory6);
+
+                FingerGuard fingerGuard2 = FingerGuard.createFingerGuard(Job.YES, member, fingerGuardCategories11, "i am a test" + i, "openurl" + i);
+                em.persist(fingerGuard2);
+            }
+            for(int i =21; i < 31; i++){
+                Member member = createMember("test"+i,"test"+i+"@naver.com","man","200302"+i,MemberRole.USER,"pass"+i);
+                List<FingerGuardCategory> fingerGuardCategories11 = new ArrayList<>();
+                FingerGuardCategory fingerGuardCategory4 = FingerGuardCategory.createFingerGuardCategory(category3);
+                fingerGuardCategories11.add(fingerGuardCategory4);
+                FingerGuardCategory fingerGuardCategory5 = FingerGuardCategory.createFingerGuardCategory(category2);
+                fingerGuardCategories11.add(fingerGuardCategory5);
+
+                FingerGuard fingerGuard2 = FingerGuard.createFingerGuard(Job.YES, member, fingerGuardCategories11, "i am a test" + i, "openurl" + i);
+                em.persist(fingerGuard2);
+            }
+
 //
 //            Member member3 =new Member();
 //
