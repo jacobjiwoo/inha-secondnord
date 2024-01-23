@@ -13,7 +13,6 @@ function Header() {
 export default Header;
 
 const HeaderLayout = styled.div`
-  border: 1px solid red;
   display: flex;
   justify-content: space-around;
   align-items: center;

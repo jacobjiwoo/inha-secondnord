@@ -1,37 +1,37 @@
 export const princess_queries = [
   {
-    key: "product",
-    query: "어떤 제품에 대해 알고 싶으신가요?",
+    key: "category",
+    query: "어떤 제품에 대해\n알고 싶으신가요?",
     options: [
       {
+        id: 1,
+        name: "카메라",
+      },
+      {
+        id: 2,
         name: "노트북",
-        description: "",
       },
       {
-        name: "컴퓨터",
-        description: "",
-      },
-      {
-        name: "음향기기",
-        description: "",
+        id: 3,
+        name: "휴대폰",
       },
     ],
   },
   {
     key: "brand",
-    query: "본인이 자주 사용하거나 선호하는 브랜드가 있으신가요?",
+    query: "자주 사용하거나\n선호하는 브랜드가 있나요?",
     options: [
       {
+        id: 1,
         name: "삼성",
-        description: "",
       },
       {
-        name: "애플",
-        description: "",
+        id: 2,
+        name: "엘지",
       },
       {
-        name: "소니",
-        description: "",
+        id: 3,
+        name: "현대",
       },
     ],
   },
@@ -39,34 +39,34 @@ export const princess_queries = [
 
 export const guard_queries = [
   {
-    key: "product",
-    query: "어떤 제품을 잘 알거나 사용하시나요?",
+    key: "category",
+    query: "어떤 제품을 잘 알거나\n사용하시나요?",
     options: [
       {
+        id: 1,
+        name: "카메라",
+      },
+      {
+        id: 2,
         name: "노트북",
-        description: "",
       },
       {
-        name: "컴퓨터",
-        description: "",
-      },
-      {
-        name: "음향기기",
-        description: "",
+        id: 3,
+        name: "휴대폰",
       },
     ],
   },
   {
     key: "job",
-    query: "관련 직종에서 근무하신 경험이 있나요?",
+    query: "관련 직종에서 근무하신\n경험이 있나요?",
     options: [
       {
-        name: "예",
-        description: "",
+        name: true,
+        description: "네",
       },
       {
-        name: "아니오",
-        description: "",
+        name: false,
+        description: "아니요",
       },
     ],
   },
