@@ -4,7 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useState } from "react";
 import { ErrorMessage } from "@hookform/error-message";
-import { LeftArrow, PasswordEye } from "../assets/svg";
+import { InputValid, LeftArrow, PasswordEye } from "../assets/svg";
 import { DevTool } from "@hookform/devtools";
 
 function Login() {
@@ -16,7 +16,7 @@ function Login() {
     handleSubmit,
     getValues,
     formState: { errors },
-    control,
+    getFieldState,
   } = useForm({ mode: "onChange" });
 
   const idRegister = register("id", {
@@ -42,7 +42,6 @@ function Login() {
   const handleLoginSubmit = async () => {
     try {
       const response = await axios.post("/api/login", getValues());
-      console.log(response);
       navigate("/home");
     } catch (error) {
       console.log(error);
@@ -52,7 +51,7 @@ function Login() {
 
   return (
     <LoginLayout>
-      <header className="header-login">
+      <header className="header">
         <div className="prev-button" onClick={() => navigate(-1)}>
           <LeftArrow fill={"black"} />
         </div>
@@ -62,12 +61,30 @@ function Login() {
       <LoginBox>
         <form onSubmit={handleSubmit(handleLoginSubmit)}>
           <InputContainer>
-            <Input
-              type="text"
-              placeholder="아이디"
-              maxLength={12}
-              {...idRegister}
-            />
+            <InputWrapper>
+              <Input
+                key="id"
+                type="text"
+                maxLength={12}
+                placeholder="아이디"
+                {...idRegister}
+                style={{
+                  outline:
+                    getFieldState("id").isDirty &&
+                    !getFieldState("id").invalid &&
+                    "2px solid #9852f9",
+                  backgroundColor:
+                    getFieldState("id").isDirty &&
+                    !getFieldState("id").invalid &&
+                    "#fff",
+                }}
+              />
+              {getFieldState("id").isDirty && !getFieldState("id").invalid && (
+                <div className="valid-logo">
+                  <InputValid />
+                </div>
+              )}
+            </InputWrapper>
             <ErrorMessage
               name="id"
               errors={errors}
@@ -77,19 +94,30 @@ function Login() {
             />
           </InputContainer>
           <InputContainer>
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder="비밀번호"
-              maxLength={20}
-              {...passwordRegister}
-            />
-
-            <div
-              className="password-eye"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
-              <PasswordEye />
-            </div>
+            <InputPassword>
+              <Input
+                type={showPassword ? "text" : "password"}
+                maxLength={20}
+                placeholder="비밀번호"
+                {...passwordRegister}
+                style={{
+                  outline:
+                    getFieldState("password").isDirty &&
+                    !getFieldState("password").invalid &&
+                    "2px solid #9852f9",
+                  backgroundColor:
+                    getFieldState("password").isDirty &&
+                    !getFieldState("password").invalid &&
+                    "#fff",
+                }}
+              />
+              <div
+                className="password-eye"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                <PasswordEye />
+              </div>
+            </InputPassword>
             <ErrorMessage
               name="password"
               errors={errors}
@@ -118,7 +146,7 @@ const LoginLayout = styled.div`
   width: 100vw;
   height: 100vh;
 
-  & .header-login {
+  & .header {
     position: fixed;
     display: flex;
     align-items: center;
@@ -126,6 +154,7 @@ const LoginLayout = styled.div`
     height: 3rem;
     padding-left: 3rem;
     background-color: #fff;
+    border-bottom: 1px solid #d9d9d9;
 
     & .prev-button {
       display: flex;
@@ -176,27 +205,31 @@ const LoginBox = styled.div`
 `;
 
 const InputContainer = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 1rem;
 
   & .error-message {
-    padding-left: 1rem;
+    margin-top: 0.3rem;
+    padding-left: 0.5rem;
     color: red;
   }
+`;
 
-  & .password-eye {
+const InputWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  & .valid-logo {
     position: absolute;
-    top: 0.6rem;
-    right: 1rem;
-    cursor: pointer;
-
-    & svg {
-      width: 2rem;
-      height: 2rem;
-    }
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
   }
 `;
 
@@ -210,7 +243,30 @@ const Input = styled.input`
   padding-left: 1rem;
 
   &:focus {
-    outline: none;
+    outline: 2px solid #9852f9;
+    background-color: #fff;
+  }
+`;
+
+const InputPassword = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  & .password-eye {
+    position: absolute;
+    right: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+
+    & svg {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 `;
 

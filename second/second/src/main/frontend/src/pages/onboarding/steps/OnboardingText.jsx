@@ -10,7 +10,6 @@ function OnboardingText({ onNext }) {
     setValue("introduction", "");
     onNext();
   };
-
   return (
     <Container>
       <h1 className="onboarding-query">
@@ -22,8 +21,9 @@ function OnboardingText({ onNext }) {
             type="text"
             placeholder="최소 20자 이상 작성 해 주세요 :)"
             maxLength={200}
-            onChange={(e) => setCharacterCount(e.target.value.length)}
-            {...register("introduction")}
+            {...register("introduction", {
+              onChange: (e) => setCharacterCount(e.target.value.length),
+            })}
           />
           <span className="character-count">{`${characterCount}/200`}</span>
         </TextAreaContainer>
@@ -92,6 +92,7 @@ const TextArea = styled.textarea`
   border: none;
   color: #fff;
   background-color: transparent;
+  resize: none;
 
   &::placeholder {
     color: #d9d9d9;

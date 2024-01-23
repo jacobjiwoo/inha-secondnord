@@ -30,17 +30,10 @@ function SubmitStep() {
   console.log("query_Data", data);
   return (
     <Layout>
-      <h1 className="title">
-        {
-          "가입해주셔서\n감사합니다!\n맞춤 서비스 제공을 위해\n몇가지 질문에\n답 해 주실 수 있나요?"
-        }
-      </h1>
+      <h1 className="title">{"가입해주셔서\n감사합니다!"}</h1>
       <div className="button-container">
-        <Button type="button" onClick={() => navigate("/onboarding")}>
-          네
-        </Button>
-        <Button type="button" onClick={() => navigate("/home")}>
-          아니요
+        <Button type="button" onClick={() => navigate("/login")}>
+          로그인
         </Button>
       </div>
     </Layout>
