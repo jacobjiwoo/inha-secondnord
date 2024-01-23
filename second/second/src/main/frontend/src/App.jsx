@@ -2,7 +2,6 @@ import { Mobile, PC, Tablet } from "./configResponsive";
 import { Route, Routes } from "react-router-dom";
 import Join from "./pages/join/Join";
 import Login from "./pages/Login";
-import Onboarding from "./pages/onboarding/OnBoarding";
 import Home from "./pages/home/Home";
 import OnboardingPrincess from "./pages/onboarding/princess/OnboardingPrincess";
 import OnboardingGuard from "./pages/onboarding/guard/OnboardingGuard";
@@ -12,6 +11,7 @@ import Guest from "./pages/Guest";
 import CategoryGuardList from "./pages/CategoryGuardList";
 import GuardProfile from "./pages/profile/GuardProfile";
 import { Suspense } from "react";
+import Onboarding from "./pages/onboarding/Onboarding";
 
 function App() {
   return (
