@@ -210,7 +210,6 @@ const URLInputWrapper = styled.div`
     outline: 2px solid #9852f9;
     background-color: #d9d9d950;
     color: #000;
-    border: 1px solid red;
   }
 
   & .copy-button {
