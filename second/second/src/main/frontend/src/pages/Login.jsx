@@ -35,7 +35,7 @@ function Login() {
     maxLength: { value: 20, message: "8~20글자로 입력해주세요" },
     pattern: {
       value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
-      message: "영문, 숫자, 특수기호를 포함해야 합니다",
+      message: "영문, 숫자, 특수기호를 포함해주세요",
     },
   });
 
@@ -57,7 +57,6 @@ function Login() {
         </div>
       </header>
       <h2 className="login-title">로그인</h2>
-      <div className="login-type"></div>
       <LoginBox>
         <form onSubmit={handleSubmit(handleLoginSubmit)}>
           <InputContainer>
@@ -174,20 +173,18 @@ const LoginLayout = styled.div`
     margin-top: 10rem;
     margin-bottom: 3rem;
   }
-
-  & .login-type {
-    width: 20rem;
-    height: 2rem;
-    margin-bottom: 2rem;
-    /* border-bottom: 0.1rem solid #9852f9; */
-  }
 `;
 
 const LoginBox = styled.div`
+  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 19rem;
+  padding: 1rem;
+  border: 2px solid #9852f9;
+  border-radius: 1rem;
 
   & form {
     display: flex;
@@ -208,7 +205,7 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   & .error-message {
     margin-top: 0.3rem;
@@ -234,8 +231,8 @@ const InputWrapper = styled.div`
 `;
 
 const Input = styled.input`
-  width: 20rem;
-  height: 3rem;
+  width: 16rem;
+  height: 2.5rem;
   margin-bottom: 0.3rem;
   border: none;
   border-radius: 0.5rem;
@@ -274,7 +271,7 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20rem;
+  width: 17rem;
   height: 2.5rem;
   margin-bottom: 1rem;
   border: none;

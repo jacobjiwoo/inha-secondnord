@@ -5,15 +5,7 @@ function Guest() {
   const navigate = useNavigate();
   return (
     <GuestLayout>
-      <h1 className="title">
-        {"안녕하세요"}
-        <br />
-        {"쉬운 IT입문"}
-        <br />
-        {"세컨노드입니다!"}
-        <br />
-        {"(대충 캐치프레이즈)"}
-      </h1>
+      <h1 className="title">{"안녕하세요\n쉬운 IT입문\n세컨노드입니다!"}</h1>
       <div className="button-container">
         <Button type="button" onClick={() => navigate("/login")}>
           로그인
@@ -45,6 +37,7 @@ const GuestLayout = styled.div`
     margin-top: 10rem;
     font-weight: 800;
     font-size: 2rem;
+    white-space: pre-line;
   }
 
   & .button-container {
@@ -69,4 +62,8 @@ const Button = styled.button`
   margin-bottom: 1rem;
   color: #000;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
