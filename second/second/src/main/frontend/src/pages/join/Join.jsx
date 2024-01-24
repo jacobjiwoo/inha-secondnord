@@ -21,10 +21,10 @@ function Join() {
     <JoinLayout>
       {steps[progress] === "submit" ? null : (
         <>
-          <header className="header-join">
+          <header className="header">
             <div className="prev-button" onClick={() => navigate(-1)}>
               <LeftArrow fill={"black"} />
-              <span>회원가입</span>
+              <span className="prev-text">회원가입</span>
             </div>
           </header>
           <span className="progress">{`${progress + 1}/${
@@ -58,13 +58,14 @@ const JoinLayout = styled.div`
   width: 100vw;
   height: 100svh;
 
-  & .header-join {
+  & .header {
     position: fixed;
     display: flex;
     align-items: center;
     width: 100%;
     height: 3rem;
     padding-left: 3rem;
+    border-bottom: 1px solid #d9d9d9;
     background-color: #fff;
 
     & .prev-button {
@@ -73,11 +74,15 @@ const JoinLayout = styled.div`
       align-items: center;
       margin-right: 0.3rem;
       cursor: pointer;
-    }
 
-    & svg {
-      width: 1rem;
-      height: 1.5rem;
+      & .prev-text {
+        line-height: 1.5rem;
+      }
+
+      & svg {
+        width: 1rem;
+        height: 1.5rem;
+      }
     }
   }
 

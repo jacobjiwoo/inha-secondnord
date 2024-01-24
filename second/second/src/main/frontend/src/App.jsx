@@ -16,36 +16,30 @@ import Onboarding from "./pages/onboarding/Onboarding";
 function App() {
   return (
     <>
-      <PC>
-        <Routes>
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/users" element={<UserList />} />
-        </Routes>
-      </PC>
-      <Tablet>tablet</Tablet>
-      <Mobile>
-        <Routes>
-          {/*게스트 화면*/}
-          <Route path="/" element={<Guest />} />
-          {/*홈 화면*/}
-          <Route path="/home" element={<Home />} />
-          <Route
-            path="/categories/:category_id"
-            element={<CategoryGuardList />}
-          />
-          <Route
-            path="/profile/guard/:finger_guard_id"
-            element={<GuardProfile />}
-          />
-          {/*로그인&회원가입*/}
-          <Route path="/login" element={<Login />} />
-          <Route path="/join" element={<Join />} />
-          {/*온보딩*/}
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/onboarding/princess" element={<OnboardingPrincess />} />
-          <Route path="/onboarding/guard" element={<OnboardingGuard />} />
-        </Routes>
-      </Mobile>
+      <Routes>
+        {/*관리자 페이지*/}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/users" element={<UserList />} />
+        {/*게스트 화면*/}
+        <Route path="/" element={<Guest />} />
+        {/*홈 화면*/}
+        <Route path="/home" element={<Home />} />
+        <Route
+          path="/categories/:category_id"
+          element={<CategoryGuardList />}
+        />
+        <Route
+          path="/profile/guard/:finger_guard_id"
+          element={<GuardProfile />}
+        />
+        {/*로그인&회원가입*/}
+        <Route path="/login" element={<Login />} />
+        <Route path="/join" element={<Join />} />
+        {/*온보딩*/}
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/onboarding/princess" element={<OnboardingPrincess />} />
+        <Route path="/onboarding/guard" element={<OnboardingGuard />} />
+      </Routes>
       {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
     </>
   );
