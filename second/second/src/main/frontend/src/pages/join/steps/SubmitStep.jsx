@@ -1,11 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { joinState } from "../../../recoil/join/atoms";
 
 const handleJoinSubmit = async (data) => {
   try {
@@ -19,12 +16,13 @@ const handleJoinSubmit = async (data) => {
 };
 
 function SubmitStep() {
+  console.log("render");
+  const { getValues } = useFormContext();
   const navigate = useNavigate();
-  const joinData = useRecoilValue(joinState);
   const { data } = useQuery({
     queryKey: ["joinSubmit"],
     queryFn: async () => {
-      return await handleJoinSubmit(joinData);
+      return await handleJoinSubmit(getValues());
     },
   });
   console.log("query_Data", data);

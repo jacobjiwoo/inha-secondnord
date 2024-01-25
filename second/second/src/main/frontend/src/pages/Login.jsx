@@ -159,7 +159,6 @@ const LoginLayout = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-right: 0.3rem;
       cursor: pointer;
     }
 
@@ -197,7 +196,7 @@ const LoginBox = styled.div`
 
   & .login-error {
     color: red;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -208,6 +207,7 @@ const InputContainer = styled.div`
   margin-bottom: 1.5rem;
 
   & .error-message {
+    font-size: 0.9rem;
     margin-top: 0.3rem;
     padding-left: 0.5rem;
     color: red;
@@ -217,23 +217,22 @@ const InputContainer = styled.div`
 const InputWrapper = styled.div`
   position: relative;
   display: flex;
-  align-items: center;
 
   & .valid-logo {
     position: absolute;
-    right: 0;
+    right: 0.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 `;
 
 const Input = styled.input`
   width: 16rem;
   height: 2.5rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
   border: none;
   border-radius: 0.5rem;
   background-color: #f1f1f1;
@@ -248,22 +247,16 @@ const Input = styled.input`
 const InputPassword = styled.div`
   position: relative;
   display: flex;
-  align-items: center;
 
   & .password-eye {
     position: absolute;
-    right: 0.5rem;
+    right: 0.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     cursor: pointer;
-
-    & svg {
-      width: 2rem;
-      height: 2rem;
-    }
   }
 `;
 

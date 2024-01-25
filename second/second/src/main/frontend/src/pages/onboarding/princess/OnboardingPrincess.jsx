@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { useFunnel } from "../../../useFunnel";
+import { useFunnel } from "../../../utils/useFunnel";
 import { Link, useNavigate } from "react-router-dom";
 import { princess_queries } from "../OnboardingQuery";
 import OnboardingCheckbox from "../steps/OnboardingCheckbox";

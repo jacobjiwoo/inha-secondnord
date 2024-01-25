@@ -178,7 +178,7 @@ const URLContainer = styled.div`
 
   & .url-title {
     font-size: 1.25rem;
-    font-weight: 800;
+    font-weight: 600;
     line-height: 0.5rem;
   }
 

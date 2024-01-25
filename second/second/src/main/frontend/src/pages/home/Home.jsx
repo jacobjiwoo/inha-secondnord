@@ -1,10 +1,114 @@
 import styled from "styled-components";
-import { LeftArrow } from "../../assets/svg";
+import { CategoryIcon, HomeIcon, LeftArrow, UserIcon } from "../../assets/svg";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Suspense } from "react";
 import ProfileImage from "../../assets/profile_image.jpg";
+import { Mobile, PC } from "../../configResponsive";
+
+function Home() {
+  const navigate = useNavigate();
+  return (
+    <>
+      <PC>
+        <PCLayout>
+          <nav>
+            <div className="nav-logo">{"SecondNORD"}</div>
+            <div className="nav-list">
+              <div className="nav-item" onClick={() => navigate("/home")}>
+                <HomeIcon />홈
+              </div>
+              <div className="nav-item" onClick={() => {}}>
+                <CategoryIcon />
+                카테고리
+              </div>
+              <div className="nav-item" onClick={() => {}}>
+                <UserIcon />
+                마이
+              </div>
+            </div>
+          </nav>
+          <MyProfilePreview />
+          <Suspense fallback={<span>Loading...</span>}>
+            <HomeCategoryList />
+          </Suspense>
+        </PCLayout>
+      </PC>
+      <Mobile>
+        <Layout>
+          <header className="header-home">
+            <div className="header-logo">{"SecondNORD"}</div>
+          </header>
+          <MyProfilePreview />
+          <Suspense fallback={<span>Loading...</span>}>
+            <HomeCategoryList />
+          </Suspense>
+        </Layout>
+      </Mobile>
+    </>
+  );
+}
+
+export default Home;
+
+const PCLayout = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  & nav {
+    position: fixed;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 15rem;
+    height: 100%;
+    padding-left: 1.5rem;
+    border-right: 1px solid #d9d9d9;
+
+    & .nav-logo {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      margin-left: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #9852f9;
+      cursor: pointer;
+    }
+
+    & .nav-list {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+    }
+
+    & .nav-item {
+      display: flex;
+      align-items: center;
+      width: 14rem;
+      height: 3rem;
+      margin-bottom: 1rem;
+      border-radius: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(217, 217, 217, 0.5);
+      }
+
+      & svg {
+        width: 2rem;
+        margin-left: 0.5rem;
+        margin-right: 1rem;
+      }
+    }
+  }
+`;
 
 const MyProfilePreview = () => {
   // const { data: my } = useQuery({
@@ -65,22 +169,6 @@ const HomeCategoryList = () => {
   );
 };
 
-function Home() {
-  return (
-    <Layout>
-      <header className="header-home">
-        <div className="header-logo">{"SecondNORD"}</div>
-      </header>
-      <MyProfilePreview />
-      <Suspense fallback={<span>Loading...</span>}>
-        <HomeCategoryList />
-      </Suspense>
-    </Layout>
-  );
-}
-
-export default Home;
-
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,6 +189,7 @@ const Layout = styled.div`
       font-size: 1.25rem;
       font-weight: 800;
       color: #9852f9;
+      cursor: pointer;
     }
   }
 `;
@@ -138,7 +227,7 @@ const MyProfileContainer = styled.div`
   }
 
   & .my-introduction {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 
   & .my-category-container {
@@ -161,7 +250,7 @@ const MyProfileContainer = styled.div`
 `;
 const CategoryLayout = styled.div`
   /* border: 1px solid red; */
-  width: 100%;
+  width: 21rem;
 
   & .category-title {
     margin-left: 1rem;
@@ -181,9 +270,10 @@ const CategoryItem = styled.div`
   align-items: center;
   justify-content: end;
   width: 100%;
-  height: 6rem;
+  height: 5rem;
   margin-bottom: 1rem;
   background: linear-gradient(90deg, #9852f9 0%, rgba(152, 82, 249, 0) 100%);
+  cursor: pointer;
 
   & .categoryItem-name {
     font-weight: 600;

@@ -36,9 +36,9 @@ export const PasswordEye = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="25"
+      height="25"
+      viewBox="0 0 23 22"
       fill="none"
     >
       <path
@@ -103,6 +103,106 @@ export const InputValid = () => {
       <path
         d="M4.91215 15.6933L11.9698 22.7421C13.3145 24.0868 14.6944 24.0956 16.0215 22.7597L23.1055 15.6757C24.4415 14.3397 24.4327 12.9599 23.0879 11.6151L16.0391 4.56631C14.6944 3.22158 13.3145 3.21279 11.9786 4.54873L4.89457 11.6327C3.55864 12.9687 3.57622 14.3485 4.91215 15.6933ZM6.21293 14.5507C5.62407 13.9618 5.60649 13.3554 6.21293 12.7489L13.0948 5.86709C13.71 5.26064 14.3077 5.26943 14.8965 5.8583L21.7872 12.7577C22.376 13.3466 22.3936 13.953 21.7872 14.5595L14.9053 21.4413C14.2989 22.0478 13.6836 22.0302 13.1036 21.4501L6.21293 14.5507ZM13.0596 17.829C13.376 17.829 13.6485 17.6708 13.8331 17.3896L17.7618 11.246C17.876 11.0614 17.9815 10.8505 17.9815 10.6483C17.9815 10.2177 17.5948 9.92764 17.1817 9.92764C16.918 9.92764 16.6807 10.0683 16.4961 10.3671L13.0245 15.9394L11.3897 13.8563C11.1788 13.5839 10.9678 13.4872 10.7041 13.4872C10.2735 13.4872 9.9395 13.83 9.9395 14.2694C9.9395 14.4804 10.0186 14.6737 10.168 14.8583L12.2422 17.3896C12.4795 17.6972 12.7344 17.829 13.0596 17.829Z"
         fill="#9852F9"
+      />
+    </svg>
+  );
+};
+
+export const WarningIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="#9852f9"
+      className="w-6 h-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+      />
+    </svg>
+  );
+};
+
+export const XIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 18 18 6M6 6l12 12"
+      />
+    </svg>
+  );
+};
+
+export const HomeIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+      />
+    </svg>
+  );
+};
+
+export const CategoryIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 6h.008v.008H6V6Z"
+      />
+    </svg>
+  );
+};
+
+export const UserIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
       />
     </svg>
   );

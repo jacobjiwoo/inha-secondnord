@@ -118,6 +118,7 @@ const GuardItem = styled.div`
   display: flex;
   flex-direction: column;
   width: 21rem;
+  cursor: pointer;
 
   & .guard-profile {
     display: flex;
