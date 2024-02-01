@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { useFunnel } from "../../../useFunnel";
+import { useFunnel } from "../../../utils/useFunnel";
 import { guard_queries } from "../OnboardingQuery";
 import { Suspense, useState } from "react";
 import OnboardingSubmit from "../steps/OnboardingSubmit";

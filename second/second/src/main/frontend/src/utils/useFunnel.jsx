@@ -17,15 +17,14 @@ export const useFunnel = ({ steps, defaultStep }) => {
 
   const onNext = () => {
     const currentStepIndex = steps.indexOf(currentStep);
-
-    if (currentStepIndex === steps.length - 1) {
+    const lastStepIndex = steps.length - 1;
+    if (currentStepIndex === lastStepIndex) {
       console.log("Current step is last");
       return;
     }
-
-    const nextStep = steps[currentStepIndex + 1];
-    setProgress(currentStepIndex + 1);
-    setCurrentStep(nextStep);
+    const nextStepIndex = currentStepIndex + 1;
+    setProgress(nextStepIndex);
+    setCurrentStep(steps[nextStepIndex]);
   };
 
   const onPrev = () => {
