@@ -42,7 +42,7 @@ function Login() {
   const handleLoginSubmit = async () => {
     try {
       const response = await axios.post("/api/login", getValues());
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       console.log(error);
       setLoginErrors(error.response.data.message);

@@ -6,7 +6,6 @@ import styled from "styled-components";
 
 const handleJoinSubmit = async (data) => {
   try {
-    console.log("request", data);
     const response = await axios.post("/api/join", data);
     console.log("response", response);
     return response;
@@ -16,7 +15,6 @@ const handleJoinSubmit = async (data) => {
 };
 
 function SubmitStep() {
-  console.log("render");
   const { getValues } = useFormContext();
   const navigate = useNavigate();
   const { data } = useQuery({
@@ -25,7 +23,6 @@ function SubmitStep() {
       return await handleJoinSubmit(getValues());
     },
   });
-  console.log("query_Data", data);
   return (
     <Layout>
       <h1 className="title">{"가입해주셔서\n감사합니다!"}</h1>

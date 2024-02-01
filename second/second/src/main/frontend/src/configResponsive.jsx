@@ -9,6 +9,14 @@ export const PC = ({ children }) => {
   return <>{isPc && children}</>;
 };
 
+export const PCAndTablet = ({ children }) => {
+  const isPCAndTablet = useMediaQuery({
+    query: "(min-width:768px)",
+  });
+
+  return <>{isPCAndTablet && children}</>;
+};
+
 export const Tablet = ({ children }) => {
   const isTablet = useMediaQuery({
     query: "(min-width:768px) and (max-width:1023px)",
