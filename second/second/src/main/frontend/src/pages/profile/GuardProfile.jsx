@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { LeftArrow } from "../../assets/svg";
 import ProfileImage from "../../assets/profile_image.jpg";
+import { Mobile, PC } from "../../configResponsive";
 
 const handleCopyClick = async (text) => {
   try {
@@ -15,7 +16,27 @@ const handleCopyClick = async (text) => {
   }
 };
 
-const GuardProfileInfo = () => {
+const GuardProfileInfo = ({ guard }) => {
+  return (
+    <GuardProfileContainer>
+      <div className="guard-box">
+        <div className="guard-image" />
+        <span className="guard-name">{guard.id}</span>
+      </div>
+      <span className="guard-introduction">{guard.introduction}</span>
+      <div className="guard-category__list">
+        {guard.categories.map((category) => (
+          <span className="guard-category__item" key={category.category_id}>
+            {`#${category.name}`}
+          </span>
+        ))}
+      </div>
+    </GuardProfileContainer>
+  );
+};
+
+function GuardProfile() {
+  const navigate = useNavigate();
   const params = useParams();
   const { data: guard } = useQuery({
     queryKey: ["guardProfile"],
@@ -31,60 +52,34 @@ const GuardProfileInfo = () => {
     },
   });
   return (
-    <GuardProfileInfoLayout>
-      <GuardProfileContainer>
-        <div className="guardProfile-container">
-          <div className="guard-image" />
-          <span className="guard-name">{guard.id}</span>
-        </div>
-        <span className="guard-introduction">{guard.introduction}</span>
-        <CategoryContainer>
-          {guard.categories.map((category) => (
-            <span className="categoryItem" key={category.category_id}>
-              {`#${category.name}`}
-            </span>
-          ))}
-        </CategoryContainer>
-      </GuardProfileContainer>
-      <URLContainer>
-        <h3 className="url-title">{"오픈채팅 링크"}</h3>
-        <URLInputWrapper>
-          <input
-            className="url-input"
-            type="text"
-            value={guard.open_url}
-            readOnly
-          />
-          <div
-            className="copy-button"
-            onClick={() => handleCopyClick(guard.open_url)}
-          >
-            copy
-          </div>
-        </URLInputWrapper>
-        <button
-          type="button"
-          className="connect-button"
-          onClick={() => window.open(`${guard.open_url}`)}
-        >
-          질문하기
-        </button>
-      </URLContainer>
-    </GuardProfileInfoLayout>
-  );
-};
-
-function GuardProfile() {
-  const navigate = useNavigate();
-  return (
     <Layout>
-      <header className="header">
-        <div className="prev-button" onClick={() => navigate(-1)}>
-          <LeftArrow fill={"#000"} />
-        </div>
-      </header>
       <Suspense fallback={<div>Loading...</div>}>
-        <GuardProfileInfo />
+        <GuardProfileInfo guard={guard} />
+
+        <URLContainer>
+          <span className="url-title">{"오픈채팅 링크"}</span>
+          <URLInputWrapper>
+            <input
+              className="url-input"
+              type="text"
+              value={guard.open_url}
+              readOnly
+            />
+            <div
+              className="copy-button"
+              onClick={() => handleCopyClick(guard.open_url)}
+            >
+              copy
+            </div>
+          </URLInputWrapper>
+          <button
+            type="button"
+            className="connect-button"
+            onClick={() => window.open(`${guard.open_url}`)}
+          >
+            질문하기
+          </button>
+        </URLContainer>
       </Suspense>
     </Layout>
   );
@@ -96,40 +91,20 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
-
-  & .header {
-    position: fixed;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 3rem;
-    padding-left: 3rem;
-    border-bottom: 1px solid #d9d9d9;
-    background-color: #fff;
-
-    & .prev-button {
-      cursor: pointer;
-    }
-
-    & svg {
-      width: 1rem;
-      height: 1.5rem;
-    }
-  }
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 `;
-
-const GuardProfileInfoLayout = styled.div``;
 
 const GuardProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
   width: 21rem;
-  margin-top: 5rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 
-  & .guardProfile-container {
+  & .guard-box {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
@@ -151,16 +126,18 @@ const GuardProfileContainer = styled.div`
   }
 
   & .guard-introduction {
+    width: 100%;
     margin-bottom: 1rem;
+    word-wrap: break-word;
   }
-`;
 
-const CategoryContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
+  & .guard-category__list {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
 
-  & .categoryItem {
+  & .guard-category__item {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -174,16 +151,18 @@ const CategoryContainer = styled.div`
 `;
 
 const URLContainer = styled.div`
-  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  width: 21rem;
 
   & .url-title {
+    margin-bottom: 0.5rem;
     font-size: 1.25rem;
-    font-weight: 800;
-    line-height: 0.5rem;
+    font-weight: 600;
   }
 
   & .connect-button {
-    width: 21rem;
+    width: 100%;
     height: 3rem;
     border: none;
     border-radius: 1rem;
@@ -199,9 +178,10 @@ const URLInputWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  width: 100%;
 
   & .url-input {
-    width: 15rem;
+    width: 100%;
     height: 3rem;
     padding-left: 1rem;
     padding-right: 5rem;
