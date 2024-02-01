@@ -9,14 +9,20 @@ import {
 import { Outlet, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import ProfileImage from "../../assets/profile_image.jpg";
 import { Mobile, PC, Tablet } from "../../configResponsive";
 import Categories from "../category/CategoriesLayout";
 import HeaderHome from "../../components/header/HeaderHome";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../recoil/login/atoms";
 
 function HomeLayout() {
   const navigate = useNavigate();
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken === null) navigate("/guest");
+  }, []);
   return (
     <>
       <PC>
@@ -35,7 +41,13 @@ function HomeLayout() {
                 <UserIcon />
                 마이
               </div>
-              <div className="nav-item" onClick={() => {}}>
+              <div
+                className="nav-item"
+                onClick={() => {
+                  localStorage.removeItem("accessToken");
+                  navigate("/guest");
+                }}
+              >
                 <LogoutIcon />
                 로그아웃
               </div>

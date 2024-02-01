@@ -1,14 +1,20 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 
+// export const PC = ({ children }) => {
+//   const isPc = useMediaQuery({
+//     query: "(min-width:1024px)",
+//   });
+
+//   return <>{isPc && children}</>;
+// };
 export const PC = ({ children }) => {
   const isPc = useMediaQuery({
-    query: "(min-width:1024px)",
+    query: "(min-width:768px)",
   });
 
   return <>{isPc && children}</>;
 };
-
 export const PCAndTablet = ({ children }) => {
   const isPCAndTablet = useMediaQuery({
     query: "(min-width:768px)",

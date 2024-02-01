@@ -42,6 +42,7 @@ function Login() {
   const handleLoginSubmit = async () => {
     try {
       const response = await axios.post("/api/login", getValues());
+      localStorage.setItem("accessToken", response.data);
       navigate("/");
     } catch (error) {
       console.log(error);
