@@ -68,7 +68,7 @@ const JoinFunnel = ({ Funnel, Step, onNext }) => {
           <RestStep onNext={onNext} />
         </Step>
         <Step name={"submit"}>
-          <Suspense fallback={<h3>로딩중...</h3>}>
+          <Suspense fallback={<h3>Loading...</h3>}>
             <SubmitStep />
           </Suspense>
         </Step>
