@@ -1,12 +1,15 @@
 {
+  "routes": [
+    {
+      "src": "/[^.]+",
+      "dest": "/",
+      "status": 200
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
       "destination": "https://second-nord.store/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/" 
     }
   ]
 }
