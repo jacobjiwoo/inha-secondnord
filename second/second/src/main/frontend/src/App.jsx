@@ -8,13 +8,12 @@ import UserList from "./admin/UserList";
 import AdminLogin from "./admin/AdminLogin";
 import Guest from "./pages/Guest";
 import GuardProfile from "./pages/profile/GuardProfile";
-import { Suspense } from "react";
 import Onboarding from "./pages/onboarding/Onboarding";
-import Categories from "./pages/category/CategoriesLayout";
 import CategoriesById from "./pages/category/CategoriesById";
 import MyProfile from "./pages/profile/MyProfile";
 import HomeLayout from "./pages/home/HomeLayout";
 import CategoriesLayout from "./pages/category/CategoriesLayout";
+import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
   return (
@@ -28,24 +27,26 @@ function App() {
         {/*로그인&회원가입*/}
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
-        {/*온보딩*/}
-        <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/onboarding/princess" element={<OnboardingPrincess />} />
-        <Route path="/onboarding/guard" element={<OnboardingGuard />} />
-        {/*메인 레이아웃*/}
-        <Route element={<HomeLayout />}>
-          {/*홈 화면*/}
-          <Route path="/" element={<Home />} />
-          {/*카테고리*/}
-          <Route path="/categories" element={<CategoriesLayout />}>
-            <Route path=":category_id" element={<CategoriesById />} />
+        <Route element={<PrivateRoute />}>
+          {/*온보딩*/}
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/onboarding/princess" element={<OnboardingPrincess />} />
+          <Route path="/onboarding/guard" element={<OnboardingGuard />} />
+          {/*메인 레이아웃*/}
+          <Route element={<HomeLayout />}>
+            {/*홈 화면*/}
+            <Route path="/" element={<Home />} />
+            {/*카테고리*/}
+            <Route path="/categories" element={<CategoriesLayout />}>
+              <Route path=":category_id" element={<CategoriesById />} />
+            </Route>
+            <Route
+              path="/profile/guard/:finger_guard_id"
+              element={<GuardProfile />}
+            />
+            {/*프로필*/}
+            <Route path="/profile/my" element={<MyProfile />} />
           </Route>
-          <Route
-            path="/profile/guard/:finger_guard_id"
-            element={<GuardProfile />}
-          />
-          {/*프로필*/}
-          <Route path="/profile/my" element={<MyProfile />} />
         </Route>
       </Routes>
       {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}

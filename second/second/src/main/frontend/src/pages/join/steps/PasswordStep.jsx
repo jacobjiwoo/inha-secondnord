@@ -16,8 +16,8 @@ function PasswordStep({ onNext }) {
   };
   const passwordRegister = register("password", {
     required: { value: true, message: "비밀번호를 입력해주세요" },
-    minLength: { value: 8, message: "8~20글자" },
-    maxLength: { value: 20, message: "8~20글자" },
+    minLength: { value: 8, message: "8~20글자로 입력해주세요" },
+    maxLength: { value: 20, message: "8~20글자로 입력해주세요" },
     pattern: {
       value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
       message: "영문, 숫자, 특수기호 포함",

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import { InputValid, LeftArrow, PasswordEye } from "../assets/svg";
 import { DevTool } from "@hookform/devtools";
+import { setCookie } from "../utils/Cookie";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -43,6 +44,7 @@ function Login() {
     try {
       const response = await axios.post("/api/login", getValues());
       localStorage.setItem("accessToken", response.data);
+      setCookie("loginCookie", response.data);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -67,6 +69,7 @@ function Login() {
                 type="text"
                 maxLength={12}
                 placeholder="아이디"
+                autoFocus
                 {...idRegister}
                 style={{
                   outline:

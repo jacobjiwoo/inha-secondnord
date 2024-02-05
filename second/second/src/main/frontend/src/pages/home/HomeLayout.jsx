@@ -7,85 +7,101 @@ import {
   UserIcon,
 } from "../../assets/svg";
 import { Outlet, Route, Routes, useMatch, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Suspense, useEffect } from "react";
-import ProfileImage from "../../assets/profile_image.jpg";
-import { Mobile, PC, Tablet } from "../../configResponsive";
-import Categories from "../category/CategoriesLayout";
-import HeaderHome from "../../components/header/HeaderHome";
-import { useRecoilValue } from "recoil";
-import { loginState } from "../../recoil/login/atoms";
+import { Mobile, PC, PCAndTablet, Tablet } from "../../configResponsive";
+import { getCookie } from "../../utils/Cookie";
 
 function HomeLayout() {
   const navigate = useNavigate();
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken === null) navigate("/guest");
-  }, []);
+  const homeMatch = useMatch("/");
+  const categoriesMatch = useMatch("/categories");
+  const myMatch = useMatch("/profile/my");
   return (
     <>
-      <PC>
-        <PCLayout>
-          <nav>
-            <div className="nav-logo">{"SecondNORD"}</div>
-            <div className="nav-list">
-              <div className="nav-item" onClick={() => navigate("/")}>
-                <HomeIcon />홈
+      <PCAndTablet>
+        <PCAndTabletLayout>
+          <PC>
+            <PCNav>
+              <div className="nav-logo">{"SecondNORD"}</div>
+              <div className="nav-list">
+                <div
+                  className="nav-item"
+                  onClick={() => navigate("/")}
+                  style={{ outline: homeMatch ? "1px solid #d9d9d9" : "none" }}
+                >
+                  <HomeIcon />홈
+                </div>
+                <div
+                  className="nav-item"
+                  onClick={() => navigate("/categories")}
+                  style={{
+                    outline: categoriesMatch ? "1px solid #d9d9d9" : "none",
+                  }}
+                >
+                  <CategoryIcon />
+                  카테고리
+                </div>
+                <div
+                  className="nav-item"
+                  onClick={() => navigate("/profile/my")}
+                  style={{ outline: myMatch ? "1px solid #d9d9d9" : "none" }}
+                >
+                  <UserIcon />
+                  마이
+                </div>
+                <div
+                  className="nav-item"
+                  onClick={() => {
+                    localStorage.removeItem("accessToken");
+                    navigate("/guest");
+                  }}
+                >
+                  <LogoutIcon />
+                  로그아웃
+                </div>
               </div>
-              <div className="nav-item" onClick={() => navigate("/categories")}>
-                <CategoryIcon />
-                카테고리
+            </PCNav>
+          </PC>
+          <Tablet>
+            <TabletNav>
+              <div className="nav-logo">{"Second\nNORD"}</div>
+              <div className="nav-list">
+                <div
+                  className="nav-item"
+                  onClick={() => navigate("/")}
+                  style={{ outline: homeMatch ? "1px solid #d9d9d9" : "none" }}
+                >
+                  <HomeIcon />
+                </div>
+                <div
+                  className="nav-item"
+                  onClick={() => navigate("/categories")}
+                  style={{
+                    outline: categoriesMatch ? "1px solid #d9d9d9" : "none",
+                  }}
+                >
+                  <CategoryIcon />
+                </div>
+                <div
+                  className="nav-item"
+                  onClick={() => navigate("/profile/my")}
+                  style={{ outline: myMatch ? "1px solid #d9d9d9" : "none" }}
+                >
+                  <UserIcon />
+                </div>
+                <div className="nav-item" onClick={() => {}}>
+                  <LogoutIcon />
+                </div>
               </div>
-              <div className="nav-item" onClick={() => navigate("/profile/my")}>
-                <UserIcon />
-                마이
-              </div>
-              <div
-                className="nav-item"
-                onClick={() => {
-                  localStorage.removeItem("accessToken");
-                  navigate("/guest");
-                }}
-              >
-                <LogoutIcon />
-                로그아웃
-              </div>
-            </div>
-          </nav>
+            </TabletNav>
+          </Tablet>
           <section>
             <Suspense fallback={<div>Loading...</div>}>
               <Outlet />
             </Suspense>
           </section>
-        </PCLayout>
-      </PC>
-      <Tablet>
-        <TabletLayout>
-          <nav>
-            <div className="nav-logo">{"Second\nNORD"}</div>
-            <div className="nav-list">
-              <div className="nav-item" onClick={() => navigate("/")}>
-                <HomeIcon />
-              </div>
-              <div className="nav-item" onClick={() => navigate("/categories")}>
-                <CategoryIcon />
-              </div>
-              <div className="nav-item" onClick={() => navigate("/profile/my")}>
-                <UserIcon />
-              </div>
-              <div className="nav-item" onClick={() => {}}>
-                <LogoutIcon />
-              </div>
-            </div>
-          </nav>
-          <section>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Outlet />
-            </Suspense>
-          </section>
-        </TabletLayout>
-      </Tablet>
+        </PCAndTabletLayout>
+      </PCAndTablet>
       <Mobile>
         <MobileLayout>
           <section>
@@ -120,124 +136,107 @@ function HomeLayout() {
 
 export default HomeLayout;
 
-const PCLayout = styled.div`
-  display: flex;
-  align-items: center;
+const PCAndTabletLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 7fr;
   width: 100vw;
   height: 100svh;
 
-  & nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 15rem;
-    height: 100%;
-    padding: 1rem;
-    border-right: 1px solid #d9d9d9;
-
-    & .nav-logo {
-      width: 14rem;
-      margin-top: 3rem;
-      margin-bottom: 3rem;
-      padding-left: 1rem;
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #9852f9;
-      cursor: pointer;
-    }
-
-    & .nav-list {
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-    }
-
-    & .nav-item {
-      display: flex;
-      align-items: center;
-      width: 14rem;
-      height: 3rem;
-      margin-bottom: 1rem;
-      border-radius: 0.7rem;
-      font-weight: 800;
-      cursor: pointer;
-
-      &:hover {
-        background-color: rgba(217, 217, 217, 0.5);
-      }
-
-      & svg {
-        width: 2rem;
-        margin-left: 0.5rem;
-        margin-right: 1rem;
-      }
-    }
-  }
-
   & section {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(100% - 15rem);
-    height: 100%;
   }
 `;
 
-const TabletLayout = styled.div`
-  & nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 5rem;
-    height: 100%;
-    padding: 1rem;
-    border-right: 1px solid #d9d9d9;
+const PCNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+  border-right: 1px solid #d9d9d9;
 
-    & .nav-logo {
-      margin-top: 3rem;
-      margin-bottom: 3rem;
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #9852f9;
-      white-space: pre-line;
-      cursor: pointer;
-    }
-
-    & .nav-list {
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-    }
-
-    & .nav-item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 3.5rem;
-      height: 3.5rem;
-      margin-bottom: 1rem;
-      border-radius: 0.7rem;
-      font-weight: 800;
-      cursor: pointer;
-
-      &:hover {
-        background-color: rgba(217, 217, 217, 0.5);
-      }
-
-      & svg {
-        width: 2rem;
-      }
-    }
+  & .nav-logo {
+    width: 14rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding-left: 1rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #9852f9;
+    cursor: pointer;
   }
 
-  & section {
-    position: relative;
+  & .nav-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  & .nav-item {
+    display: flex;
+    align-items: center;
+    width: 14rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    border-radius: 0.7rem;
+    font-weight: 800;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(217, 217, 217, 0.5);
+    }
+
+    & svg {
+      width: 2rem;
+      margin-left: 0.5rem;
+      margin-right: 1rem;
+    }
+  }
+`;
+
+const TabletNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+  border-right: 1px solid #d9d9d9;
+
+  & .nav-logo {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #9852f9;
+    white-space: pre-line;
+    cursor: pointer;
+  }
+
+  & .nav-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  & .nav-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(100% - 15rem);
-    height: 100%;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.7rem;
+    font-weight: 800;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(217, 217, 217, 0.5);
+    }
+
+    & svg {
+      width: 2rem;
+    }
   }
 `;
 
@@ -264,6 +263,7 @@ const TabBar = styled.div`
   border-top-left-radius: 2rem;
   border-top-right-radius: 2rem;
   box-shadow: 0 -1px 10px px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 
   & .tabbar-list {
     display: flex;

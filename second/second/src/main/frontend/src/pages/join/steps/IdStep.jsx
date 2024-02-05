@@ -27,7 +27,11 @@ function IdStep({ onNext }) {
   return (
     <Container>
       <h1 className="title">{"사용하실 아이디를\n입력 해 주세요"}</h1>
-      <form id="form-join" onSubmit={handleSubmit(handleIdSubmit)}>
+      <form
+        id="form-join"
+        onSubmit={handleSubmit(handleIdSubmit)}
+        autoComplete="off"
+      >
         <InputContainer>
           <InputWrapper>
             <Input

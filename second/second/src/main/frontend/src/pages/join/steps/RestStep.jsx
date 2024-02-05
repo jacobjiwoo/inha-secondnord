@@ -26,7 +26,11 @@ function RestStep({ onNext }) {
   });
   return (
     <Container>
-      <form id="form-rest" onSubmit={handleSubmit(handleRestSubmit)}>
+      <form
+        id="form-rest"
+        onSubmit={handleSubmit(handleRestSubmit)}
+        autoComplete="off"
+      >
         <InputContainer>
           <span className="input-title">{"생년월일을 입력 해 주세요."}</span>
           <InputWrapper>
