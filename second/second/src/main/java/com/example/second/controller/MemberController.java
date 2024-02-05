@@ -76,7 +76,7 @@ public class MemberController {
         response.setHeader("Set-Cookie",
                 "JSESSIONID=" + session.getId() + "; " +
                         "Path=/;" +
-                        "Domain=localhost; " +
+                        "Domain=second-nord.store; " +
                         "HttpOnly; " +
                         "Max-Age=604800; "+"SameSite=None; Secure;"
         );
