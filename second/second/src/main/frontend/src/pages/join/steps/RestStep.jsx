@@ -1,49 +1,18 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { useState } from "react";
 import { useForm, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { InputValid, PasswordEye } from "../../../assets/svg";
-import { useRecoilState } from "recoil";
-import { joinState } from "../../../recoil/join/atoms";
-
-const defaultValues = {
-  birth: "",
-  gender: "",
-  id: "",
-  password: "",
-};
 
 function RestStep({ onNext }) {
-  const [showPassword, setShowPassword] = useState(false);
-  const [joinData, setJoinData] = useRecoilState(joinState);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
     getFieldState,
-  } = useForm({
-    defaultValues: defaultValues,
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
-  const idRegister = register("id", {
-    required: { value: true, message: "아이디를 입력해주세요" },
-    minLength: { value: 6, message: "6~12글자" },
-    maxLength: { value: 12, message: "6~12글자" },
-    pattern: { value: /^[A-Za-z0-9]+$/, message: "영문, 숫자" },
-  });
-
-  const passwordRegister = register("password", {
-    required: { value: true, message: "비밀번호를 입력해주세요" },
-    minLength: { value: 8, message: "8~20글자" },
-    maxLength: { value: 20, message: "8~20글자" },
-    pattern: {
-      value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
-      message: "영문, 숫자, 특수기호 포함",
-    },
-  });
-
+  } = useFormContext();
+  const handleRestSubmit = () => {
+    onNext();
+  };
   const birthRegister = register("birth", {
     required: { value: true, message: "생년월일을 입력해주세요." },
     minLength: { value: 8, message: "8자리 생년월일을 입력해주세요." },
@@ -52,87 +21,14 @@ function RestStep({ onNext }) {
         e.target.value = e.target.value.slice(0, e.target.maxLength);
     },
   });
-  console.log();
   const genderRegister = register("gender", {
     required: { value: true, message: "성별을 선택해주세요." },
   });
-  const handleRestSubmit = () => {
-    setJoinData({ ...joinData, ...getValues() });
-    onNext();
-  };
   return (
     <Container>
       <form id="form-rest" onSubmit={handleSubmit(handleRestSubmit)}>
         <InputContainer>
-          <span className="input-title">{"1. 아이디를 입력 해 주세요."}</span>
-          <InputWrapper>
-            <Input
-              key="id"
-              type="text"
-              maxLength={12}
-              placeholder="아이디"
-              {...idRegister}
-              style={{
-                outline:
-                  getFieldState("id").isDirty &&
-                  !getFieldState("id").invalid &&
-                  "2px solid #9852f9",
-                backgroundColor:
-                  getFieldState("id").isDirty &&
-                  !getFieldState("id").invalid &&
-                  "#fff",
-              }}
-            />
-            {getFieldState("id").isDirty && !getFieldState("id").invalid && (
-              <div className="valid-logo">
-                <InputValid />
-              </div>
-            )}
-          </InputWrapper>
-          <ErrorMessage
-            name="id"
-            errors={errors}
-            render={({ message }) => (
-              <span className="error-message">{message}</span>
-            )}
-          />
-        </InputContainer>
-        <InputContainer>
-          <span className="input-title">{"2. 비밀번호를 입력 해 주세요."}</span>
-          <InputPassword>
-            <Input
-              type={showPassword ? "text" : "password"}
-              maxLength={20}
-              placeholder="비밀번호"
-              {...passwordRegister}
-              style={{
-                outline:
-                  getFieldState("password").isDirty &&
-                  !getFieldState("password").invalid &&
-                  "2px solid #9852f9",
-                backgroundColor:
-                  getFieldState("password").isDirty &&
-                  !getFieldState("password").invalid &&
-                  "#fff",
-              }}
-            />
-            <div
-              className="password-eye"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
-              <PasswordEye />
-            </div>
-          </InputPassword>
-          <ErrorMessage
-            name="password"
-            errors={errors}
-            render={({ message }) => (
-              <span className="error-message">{message}</span>
-            )}
-          />
-        </InputContainer>
-        <InputContainer>
-          <span className="input-title">{"3. 생년월일을 입력 해 주세요."}</span>
+          <span className="input-title">{"생년월일을 입력 해 주세요."}</span>
           <InputWrapper>
             <Input
               type="number"
@@ -140,6 +36,7 @@ function RestStep({ onNext }) {
               maxLength={8}
               placeholder="생년월일"
               pattern="\d*"
+              autoFocus
               {...birthRegister}
               style={{
                 outline:
@@ -168,7 +65,7 @@ function RestStep({ onNext }) {
           />
         </InputContainer>
         <InputContainer>
-          <span className="input-title">{"4. 성별을 등록 해 주세요."}</span>
+          <span className="input-title">{"성별을 등록 해 주세요."}</span>
           <RadioContainer>
             <input id="male" type="radio" value="male" {...genderRegister} />
             <label className="radio-button" htmlFor="male">
@@ -195,7 +92,7 @@ function RestStep({ onNext }) {
       </form>
       <Buttonwrapper>
         <button type="submit" form="form-rest">
-          다음 단계
+          제출
         </button>
       </Buttonwrapper>
     </Container>
@@ -209,14 +106,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-
-  & .email-title {
-    width: 21rem;
-    margin-bottom: 2rem;
-    color: black;
-    font-size: 1.8rem;
-    white-space: pre-line;
-  }
+  margin-top: 5rem;
 
   & form {
     display: flex;
@@ -294,14 +184,9 @@ const InputPassword = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     cursor: pointer;
-
-    & svg {
-      width: 2rem;
-      height: 2rem;
-    }
   }
 `;
 

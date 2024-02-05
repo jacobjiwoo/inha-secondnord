@@ -1,15 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { joinState } from "../../../recoil/join/atoms";
 
 const handleJoinSubmit = async (data) => {
   try {
-    console.log("request", data);
     const response = await axios.post("/api/join", data);
     console.log("response", response);
     return response;
@@ -19,15 +15,14 @@ const handleJoinSubmit = async (data) => {
 };
 
 function SubmitStep() {
+  const { getValues } = useFormContext();
   const navigate = useNavigate();
-  const joinData = useRecoilValue(joinState);
   const { data } = useQuery({
     queryKey: ["joinSubmit"],
     queryFn: async () => {
-      return await handleJoinSubmit(joinData);
+      return await handleJoinSubmit(getValues());
     },
   });
-  console.log("query_Data", data);
   return (
     <Layout>
       <h1 className="title">{"가입해주셔서\n감사합니다!"}</h1>

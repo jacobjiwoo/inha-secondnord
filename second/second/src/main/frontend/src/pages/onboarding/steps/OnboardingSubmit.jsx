@@ -53,7 +53,7 @@ function OnboardingSubmit({ type }) {
           : "감사합니다!\n핑거프린세스에게\n궁금한 모든 정보를\n알려주러 가 볼까요?"}
       </h1>
       <div className="button-container">
-        <Button type="button" onClick={() => navigate("/home")}>
+        <Button type="button" onClick={() => navigate("/")}>
           시작하기
         </Button>
       </div>

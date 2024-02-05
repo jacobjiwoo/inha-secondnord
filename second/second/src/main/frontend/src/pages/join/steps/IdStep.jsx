@@ -2,38 +2,41 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useForm, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { InputValid } from "../../../assets/svg";
+import { DevTool } from "@hookform/devtools";
+import { useEffect, useMemo, useRef } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
-function EmailStep({ onNext }) {
+function IdStep({ onNext }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useFormContext();
-  const handleEmailSubmit = () => {
+  const handleIdSubmit = () => {
     onNext();
   };
-  const emailRegister = register("email", {
-    required: { value: true, message: "이메일을 입력해주세요" },
-    maxLength: { value: 320, message: "이메일 길이를 확인해주세요" },
+  const idRegister = register("id", {
+    required: { value: true, message: "아이디를 입력해주세요" },
+    minLength: { value: 6, message: "6~12글자로 입력해주세요" },
+    maxLength: { value: 12, message: "6~12글자로 입력해주세요" },
     pattern: {
-      value: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-      message: "유효한 이메일 주소를 입력해주세요.",
+      value: /^[A-Za-z0-9]+$/,
+      message: "영문, 숫자만 사용 가능합니다",
     },
   });
-
   return (
     <Container>
-      <h1 className="title">{"세컨노드와\n함께 해 볼까요?"}</h1>
-      <form id="form-join" onSubmit={handleSubmit(handleEmailSubmit)}>
+      <h1 className="title">{"사용하실 아이디를\n입력 해 주세요"}</h1>
+      <form id="form-join" onSubmit={handleSubmit(handleIdSubmit)}>
         <InputContainer>
           <InputWrapper>
             <Input
-              id="email"
-              type="email"
-              placeholder="이메일을 입력해주세요 :)"
-              maxLength={320}
+              id="id"
+              type="text"
+              maxLength={12}
+              placeholder="아이디"
               autoFocus
-              {...emailRegister}
+              {...idRegister}
               style={{
                 outline: isValid && "2px solid #9852f9",
                 backgroundColor: isValid && "#fff",
@@ -46,7 +49,7 @@ function EmailStep({ onNext }) {
             )}
           </InputWrapper>
           <ErrorMessage
-            name="email"
+            name="id"
             errors={errors}
             render={({ message }) => (
               <span className="error-message">{message}</span>
@@ -63,7 +66,7 @@ function EmailStep({ onNext }) {
   );
 }
 
-export default EmailStep;
+export default IdStep;
 
 const Container = styled.div`
   display: flex;
@@ -83,7 +86,7 @@ const Container = styled.div`
     white-space: pre-line;
   }
 
-  & form {
+  & .form-join {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -133,7 +136,6 @@ const Input = styled.input`
 `;
 
 const Buttonwrapper = styled.div`
-  /* border: 1px solid red; */
   position: fixed;
   bottom: 0;
   display: flex;

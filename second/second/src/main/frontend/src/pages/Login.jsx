@@ -35,14 +35,14 @@ function Login() {
     maxLength: { value: 20, message: "8~20글자로 입력해주세요" },
     pattern: {
       value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
-      message: "영문, 숫자, 특수기호를 포함해야 합니다",
+      message: "영문, 숫자, 특수기호를 포함해주세요",
     },
   });
 
   const handleLoginSubmit = async () => {
     try {
       const response = await axios.post("/api/login", getValues());
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       console.log(error);
       setLoginErrors(error.response.data.message);
@@ -57,7 +57,6 @@ function Login() {
         </div>
       </header>
       <h2 className="login-title">로그인</h2>
-      <div className="login-type"></div>
       <LoginBox>
         <form onSubmit={handleSubmit(handleLoginSubmit)}>
           <InputContainer>
@@ -160,7 +159,6 @@ const LoginLayout = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-right: 0.3rem;
       cursor: pointer;
     }
 
@@ -174,20 +172,18 @@ const LoginLayout = styled.div`
     margin-top: 10rem;
     margin-bottom: 3rem;
   }
-
-  & .login-type {
-    width: 20rem;
-    height: 2rem;
-    margin-bottom: 2rem;
-    /* border-bottom: 0.1rem solid #9852f9; */
-  }
 `;
 
 const LoginBox = styled.div`
+  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 19rem;
+  padding: 1rem;
+  border: 2px solid #9852f9;
+  border-radius: 1rem;
 
   & form {
     display: flex;
@@ -200,7 +196,7 @@ const LoginBox = styled.div`
 
   & .login-error {
     color: red;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -208,9 +204,10 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   & .error-message {
+    font-size: 0.9rem;
     margin-top: 0.3rem;
     padding-left: 0.5rem;
     color: red;
@@ -220,23 +217,22 @@ const InputContainer = styled.div`
 const InputWrapper = styled.div`
   position: relative;
   display: flex;
-  align-items: center;
 
   & .valid-logo {
     position: absolute;
-    right: 0;
+    right: 0.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 `;
 
 const Input = styled.input`
-  width: 20rem;
-  height: 3rem;
-  margin-bottom: 0.3rem;
+  width: 16rem;
+  height: 2.5rem;
+  margin-bottom: 0.2rem;
   border: none;
   border-radius: 0.5rem;
   background-color: #f1f1f1;
@@ -251,22 +247,16 @@ const Input = styled.input`
 const InputPassword = styled.div`
   position: relative;
   display: flex;
-  align-items: center;
 
   & .password-eye {
     position: absolute;
-    right: 0.5rem;
+    right: 0.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     cursor: pointer;
-
-    & svg {
-      width: 2rem;
-      height: 2rem;
-    }
   }
 `;
 
@@ -274,7 +264,7 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20rem;
+  width: 17rem;
   height: 2.5rem;
   margin-bottom: 1rem;
   border: none;

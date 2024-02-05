@@ -1,4 +1,3 @@
-import { Mobile, PC, Tablet } from "./configResponsive";
 import { Route, Routes } from "react-router-dom";
 import Join from "./pages/join/Join";
 import Login from "./pages/Login";
@@ -8,44 +7,47 @@ import OnboardingGuard from "./pages/onboarding/guard/OnboardingGuard";
 import UserList from "./admin/UserList";
 import AdminLogin from "./admin/AdminLogin";
 import Guest from "./pages/Guest";
-import CategoryGuardList from "./pages/CategoryGuardList";
 import GuardProfile from "./pages/profile/GuardProfile";
 import { Suspense } from "react";
 import Onboarding from "./pages/onboarding/Onboarding";
+import Categories from "./pages/category/CategoriesLayout";
+import CategoriesById from "./pages/category/CategoriesById";
+import MyProfile from "./pages/profile/MyProfile";
+import HomeLayout from "./pages/home/HomeLayout";
+import CategoriesLayout from "./pages/category/CategoriesLayout";
 
 function App() {
   return (
     <>
-      <PC>
-        <Routes>
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/users" element={<UserList />} />
-        </Routes>
-      </PC>
-      <Tablet>tablet</Tablet>
-      <Mobile>
-        <Routes>
-          {/*게스트 화면*/}
-          <Route path="/" element={<Guest />} />
+      <Routes>
+        {/*관리자 페이지*/}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/users" element={<UserList />} />
+        {/*게스트 화면*/}
+        <Route path="/guest" element={<Guest />} />
+        {/*로그인&회원가입*/}
+        <Route path="/login" element={<Login />} />
+        <Route path="/join" element={<Join />} />
+        {/*온보딩*/}
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/onboarding/princess" element={<OnboardingPrincess />} />
+        <Route path="/onboarding/guard" element={<OnboardingGuard />} />
+        {/*메인 레이아웃*/}
+        <Route element={<HomeLayout />}>
           {/*홈 화면*/}
-          <Route path="/home" element={<Home />} />
-          <Route
-            path="/categories/:category_id"
-            element={<CategoryGuardList />}
-          />
+          <Route path="/" element={<Home />} />
+          {/*카테고리*/}
+          <Route path="/categories" element={<CategoriesLayout />}>
+            <Route path=":category_id" element={<CategoriesById />} />
+          </Route>
           <Route
             path="/profile/guard/:finger_guard_id"
             element={<GuardProfile />}
           />
-          {/*로그인&회원가입*/}
-          <Route path="/login" element={<Login />} />
-          <Route path="/join" element={<Join />} />
-          {/*온보딩*/}
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/onboarding/princess" element={<OnboardingPrincess />} />
-          <Route path="/onboarding/guard" element={<OnboardingGuard />} />
-        </Routes>
-      </Mobile>
+          {/*프로필*/}
+          <Route path="/profile/my" element={<MyProfile />} />
+        </Route>
+      </Routes>
       {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
     </>
   );

@@ -1,52 +1,55 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm, useFormContext } from "react-hook-form";
 import styled from "styled-components";
-import { InputValid } from "../../../assets/svg";
+import { InputValid, PasswordEye } from "../../../assets/svg";
+import { useState } from "react";
 
-function EmailStep({ onNext }) {
+function PasswordStep({ onNext }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useFormContext();
-  const handleEmailSubmit = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handlePasswordSubmit = () => {
     onNext();
   };
-  const emailRegister = register("email", {
-    required: { value: true, message: "이메일을 입력해주세요" },
-    maxLength: { value: 320, message: "이메일 길이를 확인해주세요" },
+  const passwordRegister = register("password", {
+    required: { value: true, message: "비밀번호를 입력해주세요" },
+    minLength: { value: 8, message: "8~20글자" },
+    maxLength: { value: 20, message: "8~20글자" },
     pattern: {
-      value: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-      message: "유효한 이메일 주소를 입력해주세요.",
+      value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
+      message: "영문, 숫자, 특수기호 포함",
     },
   });
 
   return (
     <Container>
-      <h1 className="title">{"세컨노드와\n함께 해 볼까요?"}</h1>
-      <form id="form-join" onSubmit={handleSubmit(handleEmailSubmit)}>
+      <h1 className="title">{"사용하실 비밀번호를\n입력 해 주세요"}</h1>
+      <form id="form-join" onSubmit={handleSubmit(handlePasswordSubmit)}>
         <InputContainer>
-          <InputWrapper>
+          <InputPassword>
             <Input
-              id="email"
-              type="email"
-              placeholder="이메일을 입력해주세요 :)"
-              maxLength={320}
+              type={showPassword ? "text" : "password"}
+              maxLength={20}
+              placeholder="비밀번호"
               autoFocus
-              {...emailRegister}
+              {...passwordRegister}
               style={{
                 outline: isValid && "2px solid #9852f9",
                 backgroundColor: isValid && "#fff",
               }}
             />
-            {isValid && (
-              <div className="valid-logo">
-                <InputValid />
-              </div>
-            )}
-          </InputWrapper>
+            <div
+              className="password-eye"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              <PasswordEye />
+            </div>
+          </InputPassword>
           <ErrorMessage
-            name="email"
+            name="password"
             errors={errors}
             render={({ message }) => (
               <span className="error-message">{message}</span>
@@ -63,7 +66,7 @@ function EmailStep({ onNext }) {
   );
 }
 
-export default EmailStep;
+export default PasswordStep;
 
 const Container = styled.div`
   display: flex;
@@ -83,7 +86,7 @@ const Container = styled.div`
     white-space: pre-line;
   }
 
-  & form {
+  & .form-join {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -102,19 +105,20 @@ const InputContainer = styled.div`
   }
 `;
 
-const InputWrapper = styled.div`
+const InputPassword = styled.div`
   position: relative;
   display: flex;
   align-items: center;
 
-  & .valid-logo {
+  & .password-eye {
     position: absolute;
-    right: 0;
+    right: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
   }
 `;
 
@@ -133,7 +137,6 @@ const Input = styled.input`
 `;
 
 const Buttonwrapper = styled.div`
-  /* border: 1px solid red; */
   position: fixed;
   bottom: 0;
   display: flex;
