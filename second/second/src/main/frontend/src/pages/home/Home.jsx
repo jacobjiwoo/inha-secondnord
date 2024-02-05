@@ -1,33 +1,55 @@
 import styled from "styled-components";
-import {
-  CategoryIcon,
-  HomeIcon,
-  LeftArrow,
-  LogoutIcon,
-  UserIcon,
-} from "../../assets/svg";
-import { Outlet, Route, Routes, useMatch, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { Suspense } from "react";
-import ProfileImage from "../../assets/profile_image.jpg";
+import { useNavigate } from "react-router-dom";
 import { Mobile, PC, PCAndTablet } from "../../configResponsive";
-import Categories from "../category/CategoriesLayout";
 import HeaderHome from "../../components/header/HeaderHome";
+import { Canvas, useThree } from "@react-three/fiber";
+import { Center, Float, OrbitControls, Text3D } from "@react-three/drei";
+import { MeshNormalMaterial } from "three";
+import { RoationIcon } from "../../assets/svg";
+
+const HomeTitle = ({ size }) => {
+  return (
+    <>
+      <Canvas orthographic camera={{ position: [0, 0, 100], zoom: 100 }}>
+        <Float speed={3} floatIntensity={3}>
+          <Center>
+            <Text3D
+              font={
+                "https://drei.pmnd.rs/fonts/helvetiker_regular.typeface.json"
+              }
+              bevelEnabled
+              bevelSize={0.07}
+              bevelThickness={0.1}
+              lineHeight={1}
+              letterSpacing={0.1}
+              color="blue"
+              size={size}
+              material={new MeshNormalMaterial()}
+            >
+              {"Second\nNORD"}
+            </Text3D>
+          </Center>
+        </Float>
+        <OrbitControls enableZoom={false} />
+      </Canvas>
+    </>
+  );
+};
 
 function Home() {
-  const navigate = useNavigate();
   return (
     <>
       <PCAndTablet>
-        <PCLayout>
-          <h1>당신을 위한 세컨노드</h1>
-        </PCLayout>
+        <PCAndTabletLayout>
+          <HomeTitle size={1} />
+          <RoationIcon />
+        </PCAndTabletLayout>
       </PCAndTablet>
       <Mobile>
         <MobileLayout>
           <HeaderHome />
-          <h1>당신을 위한 세컨노드</h1>
+          <HomeTitle size={0.4} />
+          <RoationIcon />
         </MobileLayout>
       </Mobile>
     </>
@@ -36,18 +58,37 @@ function Home() {
 
 export default Home;
 
-const PCLayout = styled.div`
+const PCAndTabletLayout = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100svh;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  /* background-color: rgba(152, 82, 249, 0.5); */
+
+  & svg {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 3rem;
+  }
 `;
 
 const MobileLayout = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+
+  & svg {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 2.5rem;
+  }
 `;

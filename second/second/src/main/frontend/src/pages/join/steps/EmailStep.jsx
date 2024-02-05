@@ -24,7 +24,11 @@ function EmailStep({ onNext }) {
   return (
     <Container>
       <h1 className="title">{"세컨노드와\n함께 해 볼까요?"}</h1>
-      <form id="form-join" onSubmit={handleSubmit(handleEmailSubmit)}>
+      <form
+        id="form-join"
+        onSubmit={handleSubmit(handleEmailSubmit)}
+        autoComplete="off"
+      >
         <InputContainer>
           <InputWrapper>
             <Input

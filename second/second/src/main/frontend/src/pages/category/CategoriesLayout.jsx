@@ -1,7 +1,7 @@
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Categories from "./Categories";
-import { Mobile, PC } from "./../../configResponsive";
+import { Mobile, PC, PCAndTablet } from "./../../configResponsive";
 import HeaderPrev from "../../components/header/HeaderPrev";
 import HeaderHome from "../../components/header/HeaderHome";
 
@@ -9,16 +9,16 @@ function CategoriesLayout() {
   const categoriesMatch = useMatch("/categories");
   return (
     <>
-      <PC>
-        <PCLayout>
+      <PCAndTablet>
+        <PCAndTabletLayout>
           <section className="section-left">
             <Categories />
           </section>
           <section className="section-right">
             <Outlet />
           </section>
-        </PCLayout>
-      </PC>
+        </PCAndTabletLayout>
+      </PCAndTablet>
       <Mobile>
         <MobileLayout>
           {categoriesMatch ? (
@@ -39,7 +39,7 @@ function CategoriesLayout() {
 
 export default CategoriesLayout;
 
-const PCLayout = styled.div`
+const PCAndTabletLayout = styled.div`
   display: flex;
   align-items: center;
   width: 100%;

@@ -1,5 +1,4 @@
 import React, { Suspense, useEffect, useState } from "react";
-import { useFunnel } from "../../utils/useFunnel";
 import EmailStep from "./steps/EmailStep";
 import SubmitStep from "./steps/SubmitStep";
 import styled from "styled-components";
@@ -9,6 +8,7 @@ import { useMatch, useNavigate } from "react-router-dom";
 import IdStep from "./steps/IdStep";
 import PasswordStep from "./steps/PasswordStep";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { useFunnel } from "../../utils/useFunnel";
 
 const JoinExitModal = ({ setModalOpen }) => {
   const navigate = useNavigate();
@@ -37,15 +37,15 @@ const JoinExitModal = ({ setModalOpen }) => {
   );
 };
 
-const steps = ["email", "id", "password", "rest", "submit"];
+const steps = ["email", "id", "password", "submit"];
 
 const JoinFunnel = ({ Funnel, Step, onNext }) => {
   const defaultValues = {
     email: "",
     id: "",
     password: "",
-    birth: "",
-    gender: "",
+    birth: "00000000",
+    gender: "none",
   };
   const methods = useForm({
     defaultValues: defaultValues,
@@ -63,9 +63,6 @@ const JoinFunnel = ({ Funnel, Step, onNext }) => {
         </Step>
         <Step name={steps[2]}>
           <PasswordStep onNext={onNext} />
-        </Step>
-        <Step name={steps[3]}>
-          <RestStep onNext={onNext} />
         </Step>
         <Step name={"submit"}>
           <Suspense fallback={<h3>Loading...</h3>}>
