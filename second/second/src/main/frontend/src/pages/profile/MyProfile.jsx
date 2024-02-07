@@ -52,7 +52,6 @@ const MyProfileInfo = () => {
     queryFn: async () => {
       try {
         const response = await axios.get("/api/profile/my");
-        console.log(response.data);
         setGuardId(response.data.finger_guard_id);
         return response.data;
       } catch (error) {
@@ -77,7 +76,6 @@ const GuardProfileInfo = ({ guardId }) => {
     queryFn: async () => {
       try {
         const response = await axios.get(`/api/profile/guard/${guardId}`);
-        console.log(response);
         return response.data;
       } catch (error) {
         console.log(error);

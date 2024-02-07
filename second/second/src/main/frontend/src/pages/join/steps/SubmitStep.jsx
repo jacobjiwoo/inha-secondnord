@@ -6,9 +6,7 @@ import styled from "styled-components";
 
 const handleJoinSubmit = async (data) => {
   try {
-    console.log("request", data);
     const response = await axios.post("/api/join", data);
-    console.log("response", response);
     return response;
   } catch (error) {
     console.log(error);

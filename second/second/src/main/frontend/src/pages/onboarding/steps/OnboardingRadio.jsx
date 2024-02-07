@@ -22,12 +22,10 @@ function OnboardingRadio() {
   });
 
   const handleOnboardingSubmit = (data) => {
-    console.log(data);
     if (data.service_type === null) return;
     navigate(`/onboarding/${data.service_type}`);
   };
 
-  console.log(getValues());
   return (
     <Container>
       <h1 className="onboarding-query">{query.query}</h1>
