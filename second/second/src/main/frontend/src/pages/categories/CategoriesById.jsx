@@ -9,9 +9,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ProfileImage from "../../assets/profile_image.jpg";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import GuardProfile from "../profile/GuardProfile";
 import { Suspense } from "react";
-import HeaderPrev from "../../components/header/HeaderPrev";
 
 function CategoriesById() {
   const navigate = useNavigate();
@@ -133,7 +131,7 @@ const GuardListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: calc(50rem);
+  height: 50rem;
   overflow-x: hidden;
   overflow-y: scroll;
 

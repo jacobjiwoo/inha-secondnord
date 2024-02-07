@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ProfileImage from "../../assets/profile_image.jpg";
 import { Mobile } from "../../config/configResponsive";
+import { LeftArrow } from "../../assets/svg";
 
 const handleCopyClick = async (text) => {
   try {
@@ -15,7 +16,21 @@ const handleCopyClick = async (text) => {
   }
 };
 
-const GuardProfileInfo = ({ guard }) => {
+const GuardProfileInfo = () => {
+  const params = useParams();
+  const { data: guard } = useQuery({
+    queryKey: ["guardProfile"],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `/api/profile/guard/${params.finger_guard_id}`
+        );
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
   return (
     <>
       <GuardProfileContainer>
@@ -62,32 +77,16 @@ const GuardProfileInfo = ({ guard }) => {
 
 function GuardProfile() {
   const navigate = useNavigate();
-  const params = useParams();
-  const { data: guard } = useQuery({
-    queryKey: ["guardProfile"],
-    queryFn: async () => {
-      try {
-        const response = await axios.get(
-          `/api/profile/guard/${params.finger_guard_id}`
-        );
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  });
   return (
     <Layout>
-      <Mobile>
-        <header>
-          <div className="header-logo" onClick={() => navigate("/")}>
-            {"SecondNORD"}
-          </div>
-        </header>
-      </Mobile>
+      <header>
+        <div className="prev-button" onClick={() => navigate(-1)}>
+          <LeftArrow fill={"black"} />
+        </div>
+      </header>
       <section>
         <Suspense fallback={<div>Loading...</div>}>
-          <GuardProfileInfo guard={guard} />
+          <GuardProfileInfo />
         </Suspense>
       </section>
     </Layout>
@@ -112,12 +111,17 @@ const Layout = styled.div`
     border-bottom: 1px solid #d9d9d9;
     background-color: #fff;
 
-    & .header-logo {
-      margin-left: 1rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #9852f9;
+    & .prev-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 1.5rem;
       cursor: pointer;
+
+      & svg {
+        width: 1rem;
+        height: 1.5rem;
+      }
     }
   }
 
