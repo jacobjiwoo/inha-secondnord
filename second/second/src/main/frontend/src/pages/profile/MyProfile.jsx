@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ProfileImage from "../../assets/profile_image.jpg";
 import { useNavigate } from "react-router-dom";
 import { Mobile, PCAndTablet } from "../../config/configResponsive";
+import { useQuery } from "@tanstack/react-query";
 
 function MyProfile() {
   const navigate = useNavigate();
