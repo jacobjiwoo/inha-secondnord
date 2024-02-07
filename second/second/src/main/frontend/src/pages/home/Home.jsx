@@ -5,7 +5,7 @@ import HeaderHome from "../../components/header/HeaderHome";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Center, Float, OrbitControls, Text3D } from "@react-three/drei";
 import { MeshNormalMaterial } from "three";
-import { RoationIcon } from "../../assets/svg";
+import { LogoutIcon, RoationIcon } from "../../assets/svg";
 import { Suspense } from "react";
 
 const HomeTitle = ({ size }) => {
@@ -55,6 +55,15 @@ function Home() {
             <div className="header-logo" onClick={() => navigate("/")}>
               {"SecondNORD"}
             </div>
+            <div
+              className="header-logout"
+              onClick={() => {
+                localStorage.removeItem("accessToken");
+                navigate("/guest");
+              }}
+            >
+              <LogoutIcon />
+            </div>
           </header>
           <section>
             <Suspense fallback={<div>Loading...</div>}>
@@ -97,6 +106,7 @@ const MobileLayout = styled.div`
   background-color: #fff;
 
   & header {
+    position: relative;
     display: flex;
     align-items: center;
     width: 100%;
@@ -110,6 +120,12 @@ const MobileLayout = styled.div`
       font-weight: 600;
       color: #9852f9;
       cursor: pointer;
+    }
+
+    & .header-logout {
+      position: absolute;
+      right: 1rem;
+      width: 1.6rem;
     }
   }
 
