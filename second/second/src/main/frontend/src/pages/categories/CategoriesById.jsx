@@ -97,8 +97,8 @@ const Layout = styled.div`
     align-items: center;
     width: 100%;
     height: 3rem;
-    background-color: #fff;
     border-bottom: 1px solid #d9d9d9;
+    background-color: #fff;
 
     & .prev-button {
       display: flex;

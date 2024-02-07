@@ -77,9 +77,18 @@ function GuardProfile() {
   });
   return (
     <Layout>
-      <Suspense fallback={<div>Loading...</div>}>
-        <GuardProfileInfo guard={guard} />
-      </Suspense>
+      <Mobile>
+        <header>
+          <div className="header-logo" onClick={() => navigate("/")}>
+            {"SecondNORD"}
+          </div>
+        </header>
+      </Mobile>
+      <section>
+        <Suspense fallback={<div>Loading...</div>}>
+          <GuardProfileInfo guard={guard} />
+        </Suspense>
+      </section>
     </Layout>
   );
 }
@@ -93,6 +102,29 @@ const Layout = styled.div`
   width: 100%;
   height: 100%;
   background-color: #fff;
+
+  & header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid #d9d9d9;
+    background-color: #fff;
+
+    & .header-logo {
+      margin-left: 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #9852f9;
+      cursor: pointer;
+    }
+  }
+
+  & section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const GuardProfileContainer = styled.div`
