@@ -23,7 +23,11 @@ function CategoriesLayout() {
         <MobileLayout>
           {categoriesMatch ? (
             <>
-              <HeaderHome />
+              <header>
+                <div className="header-logo" onClick={() => navigate("/")}>
+                  {"SecondNORD"}
+                </div>
+              </header>
               <Categories />
             </>
           ) : (
@@ -61,4 +65,21 @@ const PCAndTabletLayout = styled.div`
 const MobileLayout = styled.div`
   width: 100%;
   height: 100%;
+
+  & header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid #d9d9d9;
+    background-color: #fff;
+
+    & .header-logo {
+      margin-left: 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #9852f9;
+      cursor: pointer;
+    }
+  }
 `;
