@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ProfileImage from "../../assets/profile_image.jpg";
+import { Mobile } from "../../config/configResponsive";
 
 const handleCopyClick = async (text) => {
   try {
