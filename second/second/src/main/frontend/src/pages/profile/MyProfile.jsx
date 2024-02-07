@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import ProfileImage from "../../assets/profile_image.jpg";
 import { useNavigate } from "react-router-dom";
-import { Mobile, PCAndTablet } from "../../config/configResponsive";
+import { Mobile } from "../../config/configResponsive";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Suspense } from "react";
 
 function MyProfile() {
   const navigate = useNavigate();
@@ -20,31 +22,33 @@ function MyProfile() {
   return (
     <>
       <Layout>
-        <Mobile>
-          <header>
-            <div className="header-logo" onClick={() => navigate("/")}>
-              {"SecondNORD"}
-            </div>
-          </header>
-        </Mobile>
-        <section>
-          <MyProfileContainer>
-            <div className="my-box">
-              <div className="my-image" />
-              <span className="my-name">{my.id}</span>
-            </div>
-            <span className="my-introduction">{"My Introduction"}</span>
-            <div className="my-category__list">
-              {["category1", "category2", "category3"].map(
-                (category, index) => (
-                  <span className="my-category__item" key={index}>
-                    {`#${category}`}
-                  </span>
-                )
-              )}
-            </div>
-          </MyProfileContainer>
-        </section>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Mobile>
+            <header>
+              <div className="header-logo" onClick={() => navigate("/")}>
+                {"SecondNORD"}
+              </div>
+            </header>
+          </Mobile>
+          <section>
+            <MyProfileContainer>
+              <div className="my-box">
+                <div className="my-image" />
+                <span className="my-name">{my.id}</span>
+              </div>
+              <span className="my-introduction">{"My Introduction"}</span>
+              <div className="my-category__list">
+                {["category1", "category2", "category3"].map(
+                  (category, index) => (
+                    <span className="my-category__item" key={index}>
+                      {`#${category}`}
+                    </span>
+                  )
+                )}
+              </div>
+            </MyProfileContainer>
+          </section>
+        </Suspense>
       </Layout>
     </>
   );
