@@ -55,7 +55,6 @@ function App() {
           </Route>
         </Route>
       </Routes>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </>
   );
 }
