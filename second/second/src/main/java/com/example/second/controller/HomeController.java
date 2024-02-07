@@ -1,18 +1,17 @@
 package com.example.second.controller;
 
-import com.example.second.domain.Category;
-import com.example.second.domain.FingerGuard;
-import com.example.second.domain.FingerGuardCategory;
-import com.example.second.domain.Job;
+import com.example.second.SessionConst;
+import com.example.second.domain.*;
+import com.example.second.exception.NotAdminException;
+import com.example.second.exception.NotGuardException;
 import com.example.second.repository.CategoryRepository;
 import com.example.second.repository.FingerGuardRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +23,7 @@ import java.util.stream.Collectors;
 public class HomeController {
     private final CategoryRepository categoryRepository;
     private final FingerGuardRepository fingerGuardRepository;
+
     @GetMapping("/home")
     public ResponseHome home(){
         List<Category> all = categoryRepository.findAll();
@@ -59,6 +59,13 @@ public class HomeController {
         }
 
         return responseCategory;
+    }
+    @GetMapping("/profile/my")
+    public ResponseProfile profile(@SessionAttribute(name= SessionConst.LOGIN_MEMBER,required = false) Member member){
+        if(member.getFingerGuard()==null){
+
+        }
+        return new ResponseProfile(member);
     }
 
     @GetMapping("/profile/guard/{finger_guard_id}")
@@ -106,6 +113,25 @@ public class HomeController {
         private String open_url;
 
     }
+    @Data
+    static class ResponseProfile{
+        private Long member_id;
+        private String id;
+        private String email;
+        private Long finger_guard_id;
+
+        public ResponseProfile(Member member) {
+            this.member_id = member.getMember_id();
+            this.id = member.getId();
+            this.email = member.getEmail();
+            if(member.getFingerGuard()!=null){
+                this.finger_guard_id = member.getFingerGuard().getId();
+            }
+            else{
+                this.finger_guard_id = null;
+            }
+        }
+    }
 
     @Data
     static class ResponseCategory{
@@ -148,5 +174,6 @@ public class HomeController {
             private String name;
         }
     }
+
 
 }
