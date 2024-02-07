@@ -40,6 +40,86 @@ export default CategoriesById;
 const GuardList = () => {
   const navigate = useNavigate();
   const params = useParams();
+  // const guards = [
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  //   {
+  //     finger_guard_id: 3,
+  //     id: 3,
+  //     categories: [{ name: "dddd" }],
+  //     introduction: "ddddd",
+  //   },
+  // ];
   const { data: guards } = useQuery({
     queryKey: ["guards", params.category_id],
     queryFn: async () => {
@@ -119,6 +199,7 @@ const Layout = styled.div`
       font-weight: 600;
     }
   }
+
   & .boundary {
     width: 95%;
     border: 1px solid #d9d9d9;
@@ -128,6 +209,7 @@ const Layout = styled.div`
 `;
 
 const GuardListContainer = styled.div`
+  border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;

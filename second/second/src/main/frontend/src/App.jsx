@@ -9,11 +9,12 @@ import AdminLogin from "./admin/AdminLogin";
 import Guest from "./pages/Guest";
 import GuardProfile from "./pages/profile/GuardProfile";
 import Onboarding from "./pages/onboarding/Onboarding";
-import CategoriesById from "./pages/category/CategoriesById";
+import CategoriesById from "./pages/categories/CategoriesById";
 import MyProfile from "./pages/profile/MyProfile";
 import HomeLayout from "./pages/home/HomeLayout";
-import CategoriesLayout from "./pages/category/CategoriesLayout";
+import CategoriesLayout from "./pages/categories/CategoriesLayout";
 import PrivateRoute from "./utils/PrivateRoute";
+import PublicRoute from "./utils/PublicRoute";
 
 function App() {
   return (
@@ -22,11 +23,15 @@ function App() {
         {/*관리자 페이지*/}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/users" element={<UserList />} />
-        {/*게스트 화면*/}
-        <Route path="/guest" element={<Guest />} />
-        {/*로그인&회원가입*/}
-        <Route path="/login" element={<Login />} />
-        <Route path="/join" element={<Join />} />
+
+        <Route element={<PublicRoute />}>
+          {/*게스트 화면*/}
+          <Route path="/guest" element={<Guest />} />
+          {/*로그인&회원가입*/}
+          <Route path="/login" element={<Login />} />
+          <Route path="/join" element={<Join />} />
+        </Route>
+
         <Route element={<PrivateRoute />}>
           {/*온보딩*/}
           <Route path="/onboarding" element={<Onboarding />} />
