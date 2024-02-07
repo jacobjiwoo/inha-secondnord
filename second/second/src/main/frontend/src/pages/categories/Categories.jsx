@@ -3,8 +3,6 @@ import axios from "axios";
 import { Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import HeaderHome from "../../components/header/HeaderHome";
-import { UserIcon } from "../../assets/svg";
 
 function Categories() {
   return (

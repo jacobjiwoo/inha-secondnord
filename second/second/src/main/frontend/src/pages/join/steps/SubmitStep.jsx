@@ -45,7 +45,7 @@ const Layout = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   background-color: #9852f9;
   color: #fff;
 

@@ -107,7 +107,7 @@ const MobileLayout = styled.div`
     & .header-logo {
       margin-left: 1rem;
       font-size: 1.25rem;
-      font-weight: 800;
+      font-weight: 600;
       color: #9852f9;
       cursor: pointer;
     }

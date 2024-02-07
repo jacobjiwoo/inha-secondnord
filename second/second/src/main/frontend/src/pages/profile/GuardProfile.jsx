@@ -16,20 +16,46 @@ const handleCopyClick = async (text) => {
 
 const GuardProfileInfo = ({ guard }) => {
   return (
-    <GuardProfileContainer>
-      <div className="guard-box">
-        <div className="guard-image" />
-        <span className="guard-name">{guard.id}</span>
-      </div>
-      <span className="guard-introduction">{guard.introduction}</span>
-      <div className="guard-category__list">
-        {guard.categories.map((category) => (
-          <span className="guard-category__item" key={category.category_id}>
-            {`#${category.name}`}
-          </span>
-        ))}
-      </div>
-    </GuardProfileContainer>
+    <>
+      <GuardProfileContainer>
+        <div className="guard-box">
+          <div className="guard-image" />
+          <span className="guard-name">{guard.id}</span>
+        </div>
+        <span className="guard-introduction">{guard.introduction}</span>
+        <div className="guard-category__list">
+          {guard.categories.map((category) => (
+            <span className="guard-category__item" key={category.category_id}>
+              {`#${category.name}`}
+            </span>
+          ))}
+        </div>
+      </GuardProfileContainer>
+      <URLContainer>
+        <span className="url-title">{"오픈채팅 링크"}</span>
+        <URLInputWrapper>
+          <input
+            className="url-input"
+            type="text"
+            value={guard.open_url}
+            readOnly
+          />
+          <div
+            className="copy-button"
+            onClick={() => handleCopyClick(guard.open_url)}
+          >
+            copy
+          </div>
+        </URLInputWrapper>
+        <button
+          type="button"
+          className="connect-button"
+          onClick={() => window.open(`${guard.open_url}`)}
+        >
+          질문하기
+        </button>
+      </URLContainer>
+    </>
   );
 };
 
@@ -53,31 +79,6 @@ function GuardProfile() {
     <Layout>
       <Suspense fallback={<div>Loading...</div>}>
         <GuardProfileInfo guard={guard} />
-
-        <URLContainer>
-          <span className="url-title">{"오픈채팅 링크"}</span>
-          <URLInputWrapper>
-            <input
-              className="url-input"
-              type="text"
-              value={guard.open_url}
-              readOnly
-            />
-            <div
-              className="copy-button"
-              onClick={() => handleCopyClick(guard.open_url)}
-            >
-              copy
-            </div>
-          </URLInputWrapper>
-          <button
-            type="button"
-            className="connect-button"
-            onClick={() => window.open(`${guard.open_url}`)}
-          >
-            질문하기
-          </button>
-        </URLContainer>
       </Suspense>
     </Layout>
   );

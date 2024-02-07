@@ -23,7 +23,7 @@ const Layout = styled.div`
 
   & .header-logo {
     font-size: 1.25rem;
-    font-weight: 800;
+    font-weight: 600;
     color: #9852f9;
     cursor: pointer;
   }

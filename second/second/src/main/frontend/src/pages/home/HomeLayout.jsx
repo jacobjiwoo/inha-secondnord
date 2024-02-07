@@ -89,7 +89,13 @@ function HomeLayout() {
                 >
                   <UserIcon />
                 </div>
-                <div className="nav-item" onClick={() => {}}>
+                <div
+                  className="nav-item"
+                  onClick={() => {
+                    localStorage.removeItem("accessToken");
+                    navigate("/guest");
+                  }}
+                >
                   <LogoutIcon />
                 </div>
               </div>

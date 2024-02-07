@@ -15,6 +15,7 @@ import HomeLayout from "./pages/home/HomeLayout";
 import CategoriesLayout from "./pages/categories/CategoriesLayout";
 import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
   return (
@@ -54,7 +55,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-      {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </>
   );
 }

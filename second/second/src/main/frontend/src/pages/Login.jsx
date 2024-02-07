@@ -68,7 +68,6 @@ function Login() {
                 type="text"
                 maxLength={12}
                 placeholder="아이디"
-                autoFocus
                 {...idRegister}
                 style={{
                   outline:
@@ -146,7 +145,7 @@ const LoginLayout = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
 
   & .header {
     position: fixed;
@@ -200,6 +199,10 @@ const LoginBox = styled.div`
   & .login-error {
     color: red;
     margin-bottom: 0.5rem;
+  }
+
+  & a {
+    color: #a1a1a1;
   }
 `;
 
