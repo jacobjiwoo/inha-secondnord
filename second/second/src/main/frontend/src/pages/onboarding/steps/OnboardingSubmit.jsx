@@ -12,9 +12,7 @@ const handleOnboardingGuardSubmit = async (data) => {
   data.category = categoryArr;
 
   //data fetch
-  console.log("request", data);
   const response = await axios.post("/api/onboarding/guard", data);
-  console.log("response", response);
   return response;
 };
 
@@ -28,7 +26,6 @@ const handleOnboardingPrincessSubmit = async (data) => {
   data.category = categoryArr;
 
   //data fetch
-  console.log("princess request", data);
   const response = await axios.post("/api/onboarding/princess", data);
   return response;
 };

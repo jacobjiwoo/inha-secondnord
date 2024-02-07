@@ -31,9 +31,7 @@ const handleAuthorizedGuardSubmit = async (authorizedGuards) => {
     requestData.allMember.push({ member_id: guard });
   });
 
-  console.log("request", requestData);
   const response = await axios.patch("/api/admin/users/guard", requestData);
-  console.log("response", response);
 };
 
 function UserList() {
