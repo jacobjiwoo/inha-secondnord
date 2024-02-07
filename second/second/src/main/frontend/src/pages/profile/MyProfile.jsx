@@ -1,23 +1,51 @@
 import styled from "styled-components";
 import ProfileImage from "../../assets/profile_image.jpg";
+import { useNavigate } from "react-router-dom";
+import { Mobile, PCAndTablet } from "../../config/configResponsive";
+
 function MyProfile() {
+  const navigate = useNavigate();
+  const { data: my } = useQuery({
+    queryKey: ["myProfile"],
+    queryFn: async () => {
+      try {
+        const response = await axios.get("/api/profile/my");
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
   return (
-    <Layout>
-      <MyProfileContainer>
-        <div className="my-box">
-          <div className="my-image" />
-          <span className="my-name">{"MyProfile"}</span>
-        </div>
-        <span className="my-introduction">{"My Introduction"}</span>
-        <div className="my-category__list">
-          {["category1", "category2", "category3"].map((category, index) => (
-            <span className="my-category__item" key={index}>
-              {`#${category}`}
-            </span>
-          ))}
-        </div>
-      </MyProfileContainer>
-    </Layout>
+    <>
+      <Layout>
+        <Mobile>
+          <header>
+            <div className="header-logo" onClick={() => navigate("/")}>
+              {"SecondNORD"}
+            </div>
+          </header>
+        </Mobile>
+        <section>
+          <MyProfileContainer>
+            <div className="my-box">
+              <div className="my-image" />
+              <span className="my-name">{my.id}</span>
+            </div>
+            <span className="my-introduction">{"My Introduction"}</span>
+            <div className="my-category__list">
+              {["category1", "category2", "category3"].map(
+                (category, index) => (
+                  <span className="my-category__item" key={index}>
+                    {`#${category}`}
+                  </span>
+                )
+              )}
+            </div>
+          </MyProfileContainer>
+        </section>
+      </Layout>
+    </>
   );
 }
 
@@ -30,6 +58,29 @@ const Layout = styled.div`
   width: 100%;
   height: 100%;
   background-color: #fff;
+
+  & header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid #d9d9d9;
+    background-color: #fff;
+
+    & .header-logo {
+      margin-left: 1rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #9852f9;
+      cursor: pointer;
+    }
+  }
+
+  & section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const MyProfileContainer = styled.div`
@@ -37,7 +88,7 @@ const MyProfileContainer = styled.div`
   flex-direction: column;
   align-items: start;
   width: 21rem;
-  margin-top: 5rem;
+  margin-top: 3rem;
 
   & .my-box {
     display: flex;

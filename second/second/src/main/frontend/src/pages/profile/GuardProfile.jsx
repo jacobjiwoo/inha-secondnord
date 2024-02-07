@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { LeftArrow } from "../../assets/svg";
 import ProfileImage from "../../assets/profile_image.jpg";
-import { Mobile, PC } from "../../configResponsive";
+import { Mobile, PC } from "../../config/configResponsive";
 
 const handleCopyClick = async (text) => {
   try {

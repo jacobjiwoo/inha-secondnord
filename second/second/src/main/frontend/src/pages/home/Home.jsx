@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Mobile, PC, PCAndTablet } from "../../configResponsive";
+import { Mobile, PC, PCAndTablet } from "../../config/configResponsive";
 import HeaderHome from "../../components/header/HeaderHome";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Center, Float, OrbitControls, Text3D } from "@react-three/drei";
 import { MeshNormalMaterial } from "three";
 import { RoationIcon } from "../../assets/svg";
+import { Suspense } from "react";
 
 const HomeTitle = ({ size }) => {
   return (
     <>
       <Canvas orthographic camera={{ position: [0, 0, 100], zoom: 100 }}>
-        <Float speed={3} floatIntensity={3}>
+        <Float speed={3} floatIntensity={1}>
           <Center>
             <Text3D
               font={
@@ -30,26 +31,37 @@ const HomeTitle = ({ size }) => {
             </Text3D>
           </Center>
         </Float>
-        <OrbitControls enableZoom={false} />
+        <OrbitControls enableZoom={false} enablePan={false} />
       </Canvas>
     </>
   );
 };
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <>
       <PCAndTablet>
         <PCAndTabletLayout>
-          <HomeTitle size={1} />
-          <RoationIcon />
+          <Suspense fallback={<div>Loading...</div>}>
+            <HomeTitle size={1} />
+            <RoationIcon />
+          </Suspense>
         </PCAndTabletLayout>
       </PCAndTablet>
       <Mobile>
         <MobileLayout>
-          <HeaderHome />
-          <HomeTitle size={0.4} />
-          <RoationIcon />
+          <header>
+            <div className="header-logo" onClick={() => navigate("/")}>
+              {"SecondNORD"}
+            </div>
+          </header>
+          <section>
+            <Suspense fallback={<div>Loading...</div>}>
+              <HomeTitle size={0.4} />
+              <RoationIcon />
+            </Suspense>
+          </section>
         </MobileLayout>
       </Mobile>
     </>
@@ -77,18 +89,38 @@ const PCAndTabletLayout = styled.div`
 `;
 
 const MobileLayout = styled.div`
-  position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   height: 100%;
   background-color: #fff;
 
-  & svg {
-    position: absolute;
-    right: 1rem;
-    bottom: 1rem;
-    width: 2.5rem;
+  & header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 3rem;
+    border-bottom: 1px solid #d9d9d9;
+    background-color: #fff;
+
+    & .header-logo {
+      margin-left: 1rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #9852f9;
+      cursor: pointer;
+    }
+  }
+
+  & section {
+    position: relative;
+
+    & svg {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      width: 2rem;
+    }
   }
 `;

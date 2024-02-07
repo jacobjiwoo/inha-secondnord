@@ -8,7 +8,7 @@ import {
 } from "../../assets/svg";
 import { Outlet, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import { Suspense, useEffect } from "react";
-import { Mobile, PC, PCAndTablet, Tablet } from "../../configResponsive";
+import { Mobile, PC, PCAndTablet, Tablet } from "../../config/configResponsive";
 import { getCookie } from "../../utils/Cookie";
 
 function HomeLayout() {
@@ -105,9 +105,7 @@ function HomeLayout() {
       <Mobile>
         <MobileLayout>
           <section>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Outlet />
-            </Suspense>
+            <Outlet />
           </section>
           <TabBar>
             <div className="tabbar-list">
@@ -245,11 +243,11 @@ const MobileLayout = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
 
   & section {
     width: 100%;
-    height: calc(100% - 4rem);
+    height: calc(100% - 3rem);
   }
 `;
 

@@ -1,7 +1,7 @@
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Categories from "./Categories";
-import { Mobile, PC, PCAndTablet } from "./../../configResponsive";
+import { Mobile, PC, PCAndTablet } from "../../config/configResponsive";
 import HeaderPrev from "../../components/header/HeaderPrev";
 import HeaderHome from "../../components/header/HeaderHome";
 

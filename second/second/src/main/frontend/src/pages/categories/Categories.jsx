@@ -9,7 +9,10 @@ import { UserIcon } from "../../assets/svg";
 function Categories() {
   return (
     <Layout>
-      <span className="category-title">{"# 카테고리별\n질문하기"}</span>
+      <div className="category-title">
+        <div>{"#"}</div>
+        <span>{"카테고리별\n질문하기"}</span>
+      </div>
       <div className="boundary" />
       <Suspense fallback={<div>Loading...</div>}>
         <CategoryList />
@@ -20,6 +23,7 @@ function Categories() {
 
 const CategoryList = () => {
   const navigate = useNavigate();
+  // const categories = [{ category_id: 3, name: "카메라" }, {}, {}];
   const { data: categories, error } = useQuery({
     queryKey: ["categoryList"],
     queryFn: async () => {
@@ -45,10 +49,6 @@ const CategoryList = () => {
             }
           >
             <span className="category-item__name">{`${category.name}`}</span>
-            <div className="category-item__countbox">
-              <UserIcon />
-              <span className="category-item__count">15</span>
-            </div>
           </div>
         ))}
       </div>
@@ -66,12 +66,16 @@ const Layout = styled.div`
   background-color: #fff;
 
   & .category-title {
+    display: flex;
     width: 80%;
     margin-top: 8rem;
     font-size: 2rem;
     font-weight: 800;
-    text-align: left;
     white-space: pre-line;
+
+    & span {
+      margin-left: 0.3rem;
+    }
   }
 
   & .boundary {
@@ -97,7 +101,6 @@ const CategoryListContainer = styled.div`
   & .category-item {
     display: flex;
     align-items: center;
-    justify-content: space-around;
     width: 80%;
     height: 4rem;
     margin-bottom: 1rem;
@@ -106,23 +109,10 @@ const CategoryListContainer = styled.div`
     cursor: pointer;
 
     & .category-item__name {
+      margin-left: 3rem;
       font-size: 1.2rem;
       font-weight: 600;
       color: #000;
-    }
-
-    & .category-item__countbox {
-      display: flex;
-      align-items: center;
-
-      & svg {
-        width: 1.5rem;
-      }
-
-      & .category-item__count {
-        font-size: 1.2rem;
-        color: #000;
-      }
     }
   }
 `;

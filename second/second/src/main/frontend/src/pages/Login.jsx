@@ -44,7 +44,6 @@ function Login() {
     try {
       const response = await axios.post("/api/login", getValues());
       localStorage.setItem("accessToken", response.data);
-      setCookie("loginCookie", response.data);
       navigate("/");
     } catch (error) {
       console.log(error);
